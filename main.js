@@ -292,9 +292,9 @@ tilesetImage.onload = function(){
    setCanvasSize(1,1)
    setLayer(1)
 }
-volumeImage.src = "volumeSheet.png"
-objectImage.src = "objectSheet.png";
-tilesetImage.src = "tilesheet.png";
+volumeImage.src = "images/volumeSheet.png"
+objectImage.src = "images/objectSheet.png";
+tilesetImage.src = "images/tilesheet.png";
 
 function download(filename) {
     var pom = document.createElement('a');
