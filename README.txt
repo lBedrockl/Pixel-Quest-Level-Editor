@@ -1,4 +1,4 @@
-Python is required for the webserver, otherwise the html cant access the tilesheet
+Python is required for the webserver, otherwise the html cant access the tilesheets
 
 Run.bat will start the editor
 
@@ -13,7 +13,7 @@ red = killbox
 
 Level must have a Blue door (Start) and a Red Door (End)
 
-Max size of a level is 3x3 rooms, 2x2 rooms are already super laggy
+Max size of a level is 3x5, 2x2 is already super laggy
 
 Tutorials: not yet
 
