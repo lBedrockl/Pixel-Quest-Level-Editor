@@ -1,0 +1,17 @@
+one screen is 40 x 30
+
+
+add scaling of the canvas, must fix getting mouse coords, add a slider to scale it
+
+add a clear cache button
+
+import from bin file
+
+
+
+add a box place at a later point, hold crtl
+
+toggle for showing volumes on all layer
+
+fix the fucking image select thing, i dont wanna
+

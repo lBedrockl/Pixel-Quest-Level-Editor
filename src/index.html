@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Quest Map Editor Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<div class="card">
+   
+   <header>
+    <h1>Pixel Quest Editor
+        <ul class="layers">By Bedrock</ul>
+    </h1>
+        <div>
+            <ul><button class="button-as-link" onclick="clearCanvas()">Clear Canvas</button></ul>
+            <ul>
+                <form id="reloadForm" onsubmit="clearCanvas();setCanvasSize(this['roomX'].value,this['roomY'].value);this['roomX'].value = '';this['roomY'].value = '';return false;">
+                    <input type="submit" class="button-as-link" value="Room Size">
+                    <ul class="layers">
+                        <input class="input" type="number" min=1 max=3 required=true placeholder="X" name="roomX"></input>
+                        <input class="input" type="number"  min=1 max=5 required=true placeholder="Y" name="roomY"></input>
+                    </ul>
+                </form>
+            </ul>
+        </div>
+        <form id=lvlnameForm onsubmit="
+        if(event.submitter.value == 'Download Level'){
+            download(this['lvlName'].value)
+        }else{
+            reloadEditor(this['lvlName'].value)
+        }
+        return false;">
+            <input type="submit" class="primary-button" value='Download Level'>
+            <input type="submit" class="primary-button" value='Reload Save'>
+            <ul class="layers">
+            <label>Level Name: </label>
+            <textarea rows=1 cols=40 maxlength=36 required=true placeholder="Input" name="lvlName"></textarea>
+            </ul>
+        </form>
+   </header>
+   <div class="card_body">
+      <aside>
+         <label>Tiles</label>
+         <div class="tileset-container">
+            <img id="tileset-source" crossorigin />
+            <div class="tileset-container_selection"></div>
+         </div>
+         <label>Volumes</label>
+         <div class="volume-container">
+            <img id="volume-source" crossorigin />
+            <div class="volume-container_selection"></div>
+         </div>
+      </aside>
+      <aside>
+        <label>Objects</label>
+         <div class="object-container">
+            <img id="object-source" crossorigin />
+            <div class="object-container_selection"></div>
+         </div>
+      </aside>
+      <div class="card_right-column">
+         <!-- The main canvas -->
+         <canvas width="0" height="0">
+         </canvas>
+         <p class="instructions">
+            <strong>Click</strong> to paint.
+            <strong>Shift+Click</strong> to remove.
+         </p>
+         <!-- UI for layers -->
+         <div>
+            <label>Editing Layer:</label>
+            <ul class="layers">
+               <li><button onclick="setLayer(6)" class="layer" tile-layer="6">All</button></li>
+               <li><button onclick="setLayer(5)" class="layer" tile-layer="5">Volume</button></li>
+               <li><button onclick="setLayer(4)" class="layer" tile-layer="4">Fringe</button></li>
+               <li><button onclick="setLayer(3)" class="layer" tile-layer="3">Object</button></li>
+               <li><button onclick="setLayer(2)" class="layer" tile-layer="2">Decal</button></li>
+               <li><button onclick="setLayer(1)" class="layer" tile-layer="1">Terrain</button></li>
+               <li><button onclick="setLayer(0)" class="layer" tile-layer="0">Background</button></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</div>
+  <script  src="./main.js"></script>
+</html>

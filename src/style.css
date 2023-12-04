@@ -1,0 +1,184 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 200%;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  padding: 1em;
+  background: black;
+  display: flex;
+  justify-content: space-around;
+  color: rgb(27, 190, 185);
+}
+
+.instructions {
+  font-size: 0.8em;
+  color: #aaa;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+.card {
+  background: #000000;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  padding-bottom: 16px;
+}
+.card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #878787;
+  margin-bottom: 1em;
+  padding: 16px;
+}
+.card header h1 {
+  margin: 0;
+}
+.card header .button-as-link {
+  margin-right: 1em;
+}
+.card aside {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.card_body {
+  display: flex;
+}
+
+.card_right-column {
+  padding-right: 16px;
+}
+
+canvas {
+  background: #6e8380;
+  image-rendering: pixelated; 
+  image-rendering: crisp-edges;
+}
+
+.volume-container {
+    position: relative;
+    image-rendering: pixelated; 
+  image-rendering: crisp-edges;
+}
+
+.object-container {
+  position: relative;
+  image-rendering: pixelated; 
+  image-rendering: crisp-edges;
+}
+
+.tileset-container {
+  position: relative;
+  image-rendering: pixelated; 
+  image-rendering: crisp-edges;
+}
+
+.volume-container_selection {
+    position: absolute;
+    outline: 3px solid cyan;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.object-container_selection {
+  position: absolute;
+  outline: 3px solid cyan;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.tileset-container_selection {
+  position: absolute;
+  outline: 3px solid cyan;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.layers {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.layers button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  font-family: inherit;
+  outline: 0;
+  background: transparent;
+  border: 0;
+  padding: 8px 0;
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
+
+.layers button.active {
+    background: linear-gradient(90deg, rgb(0, 55, 56)0%, rgb(0, 0, 0) 100%);
+  font-weight: bold;
+  color: rgb(27, 190, 185);
+}
+
+.button-as-link {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  text-decoration: underline;
+  background: transparent;
+  color: #a3a4b7;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 0;
+  background: rgb(27, 190, 185);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid rgb(16, 113, 110);
+  color: #fff;
+  border-radius: 6px;
+  outline: 0;
+  padding: 6px 16px;
+  cursor: pointer;
+}
+
+label {
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  display: block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input {
+    background: transparent;
+    width: 55px;
+    resize: none;
+    color: rgb(255, 255, 255);
+}
+
+textarea {
+    background: transparent;
+    resize: none;
+    color: rgb(255, 255, 255);
+}

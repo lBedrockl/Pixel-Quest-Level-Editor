@@ -1,0 +1,14 @@
+{
+  "name": "pq-level-editor",
+  "version": "1.0.0",
+  "description": "pixel quest level editor",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bedrock",
+  "license": "ISC",
+  "dependencies": {
+    "jimp": "^0.22.10"
+  }
+}
