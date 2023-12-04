@@ -1,5 +1,5 @@
-Custom level swf files
+Custom level swf By ttBIGGER
 
-Tutorials:
+How to add bin to swf: tut here
 
 Jpexs: https://github.com/jindrapetrik/jpexs-decompiler

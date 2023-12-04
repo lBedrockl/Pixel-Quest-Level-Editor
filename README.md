@@ -5,21 +5,18 @@ Run.bat will start the editor
 
 -Current Features-
 
-Volume Layer for hitboxes
-blue = solid
-green = oneway
-pink = moving object reflect
-red = killbox
+Volume Layer for hitboxes, blue = solid, green = oneway, pink = moving object reflect, red = killbox
 
 Level must have a Blue door (Start) and a Red Door (End)
 
 Max size of a level is 3x5, 2x2 is already super laggy
 
-Tutorials: not yet
+How to use editor: tut here
 
-Other Tuts: github resources link
+Adding level to swf: https://github.com/lBedrockl/Pixel-Quest-Level-Editor/tree/master/resources
 
 
-Remember the names of the levels you download, they are saved
+Remember the names of the levels you download, they are saved to cache
+Will add .bin importing later
 
 
