@@ -17,5 +17,9 @@ Max size of a level is 3x5, 2x2 is already super laggy
 
 Tutorials: not yet
 
+Other Tuts: github resources link
+
 
 Remember the names of the levels you download, they are saved
+
+
