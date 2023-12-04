@@ -5,11 +5,7 @@ Run.bat will start the editor
 
 -Current Features-
 
-Volume Layer for hitboxes
-,blue = solid
-,green = oneway
-,pink = moving object reflect
-,red = killbox
+Volume Layer for hitboxes, blue = solid, green = oneway, pink = moving object reflect, red = killbox
 
 Level must have a Blue door (Start) and a Red Door (End)
 
