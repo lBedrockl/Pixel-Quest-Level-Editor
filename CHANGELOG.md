@@ -1,22 +1,16 @@
-Python is required for the webserver, otherwise the html cant access the tilesheets
+# Change Log
+All notable changes to this project will be documented in this file.
 
-Run.bat will start the editor
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0]
+### Added
+- MINOR Project version is displayed by the title
 
--Current Features-
+### Changed
 
-Volume Layer for hitboxes, blue = solid, green = oneway, pink = moving object reflect, red = killbox
+### Fixed
 
-Level must have a Blue door (Start) and a Red Door (End)
-
-Max size of a level is 3x5, 2x2 is already super laggy
-
-How to use editor: tut here
-
-Adding level to swf: https://github.com/lBedrockl/Pixel-Quest-Level-Editor/tree/master/resources
-
-
-Remember the names of the levels you download, they are saved to cache
-Will add .bin importing later
-
-
+## [1.0.0]
+- First working version
