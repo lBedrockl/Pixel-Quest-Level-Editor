@@ -18,7 +18,6 @@ var objectImage = document.querySelector("#object-source");
 
 
 var editorVer = '1.0.0-SNAPSHOT';
-var version = 5;
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [1, 1];
 
@@ -171,6 +170,61 @@ function exportLevel(name) {
     return `${start}\n${output}${end}` //xml output
 }
 
+function importBin(binFile){
+    let bin //= fs.readFileSync(`./binaryData/${binN}`, 'utf8')
+    
+    let rows = bin.split('<Row>\n') //make rows
+    let rowArray = []
+    for(let x of rows){
+        rowArray.push(x.slice(0,x.indexOf('</Row>') - 4))
+    }
+    
+    let col = []
+    let i = 0
+    for(let row of rowArray){
+        col[i] = row.split('<Column')
+        .map(x => ({
+            start: x.match('level') != null, //anti start stuff
+            emp: x.match('/>') != null,
+    
+            frin: x.match('<Fringe') != null, //tile sets
+            back: x.match('<Background') != null,
+            ter: x.match('<Terrain') != null, 
+            obj: x.match('<Objects') != null,
+            decal: x.match('<Decal') != null,
+    
+            vol: x.match('<Volume') != null, // 8-15 tutorial signs
+            text: x 
+        }))
+        i++
+    }
+
+    let x = col[parseInt(py)][parseInt(px)]
+    if(!x.start){
+        if(!x.emp){ //do stuff to image here
+            let volVal = x.text.slice(x.text.indexOf('<Volume') + 23,x.text.indexOf('</Volume>'))
+            let backVal = x.text.slice(x.text.indexOf('<Background') + 26,x.text.indexOf('</Background>'))
+            let terVal = x.text.slice(x.text.indexOf('<Terrain') + 23,x.text.indexOf('</Terrain>'))
+            let objVal = x.text.slice(x.text.indexOf('<Objects') + 25,x.text.indexOf('</Objects>'))
+            let frinVal = x.text.slice(x.text.indexOf('<Fringe') + 22,x.text.indexOf('</Fringe>'))
+            let decalVal = x.text.slice(x.text.indexOf('<Decal') + 21,x.text.indexOf('</Decal>'))
+
+
+            if(x.ter){
+
+            }
+
+            if(x.obj){
+
+            }
+
+            if(x.vol){
+
+            }
+        }
+    }
+}
+
 //Reset state to empty
 function clearCanvas() {
    layers = [{}, {}, {}, {}, {}, {}];
@@ -201,6 +255,17 @@ function reloadEditor(toLoad){
 function draw() {
    var ctx = canvas.getContext("2d");
    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+   ctx.globalAlpha = 0.1
+   ctx.fillStyle = "black";
+   let mod = 0
+   for(var x = 0;x < canvas.width; x+= 16){
+       for(var y = 0;y < canvas.width; y+= 16){
+           if(mod % 2 == 0) ctx.fillRect(x, y, 16, 16)
+           mod++
+       }
+       mod++
+   }
 
    var size_of_crop = 16;
    var curLayer = 0
