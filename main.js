@@ -371,9 +371,14 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
 }
 
 function setCanvasSize(width, height){ //in room size
-    canvas.width = 640 * (parseInt(width) / 2)
-    canvas.height = 480 * (parseInt(height) / 2)
-    currentSize = [parseInt(width), parseInt(height)]
+    let w = parseInt(width)
+    let h = parseInt(height)
+    canvas.width = 640 * (w / 2)
+    canvas.height = 480 * (h / 2)
+
+    if(currentSize[0] > w || currentSize[1] > h) clearCanvas()
+
+    currentSize = [w, h]
     draw()
 }
 

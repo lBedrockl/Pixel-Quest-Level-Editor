@@ -18,7 +18,7 @@
         <div>
             <ul><button class="button-as-link" onclick="clearCanvas()">Clear Canvas</button></ul>
             <ul>
-                <form id="reloadForm" onsubmit="clearCanvas();setCanvasSize(this['roomX'].value,this['roomY'].value);this['roomX'].value = '';this['roomY'].value = '';return false;">
+                <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value);this['roomX'].value = '';this['roomY'].value = '';return false;">
                     <input type="submit" class="button-as-link" value="Room Size">
                     <ul class="layers">
                         <input class="input" type="number" min=2 max=6 required=true placeholder="X" name="roomX"></input>

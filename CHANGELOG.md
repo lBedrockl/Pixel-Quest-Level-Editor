@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.2.1]
 ### Added
-- Rooms scale by .5 now
+- Room size now scales by .5
+- Resizing the rooms *Bigger* will now not erase old tiles
 
 ### Fixed
+- Canvas tiling fixed
+- Bin importing can be done multiple times without reloading the page
 - Saw arrows now show where they reflect from
 
 ## [1.2.0]
