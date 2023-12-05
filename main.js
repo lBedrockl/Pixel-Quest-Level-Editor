@@ -17,7 +17,8 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.0.0';
+var editorVer = '1.0.0-SNAPSHOT';
+document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [1, 1];
 
 var selection = [0, 0];
