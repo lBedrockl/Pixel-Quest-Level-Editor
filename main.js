@@ -208,30 +208,32 @@ function importBin(binFile){
             let frinVal = x.text.slice(x.text.indexOf('<Fringe') + 22,x.text.indexOf('</Fringe>'))
             let decalVal = x.text.slice(x.text.indexOf('<Decal') + 21,x.text.indexOf('</Decal>'))
             
-            var key = clicked[0] + "-" + clicked[1];
+
+            //convert value to tilesheet
+            var key = 0 + "-" + 0;
 
             if(x.vol){
-                layer[5][key] = [0][0]
+                layers[5][key] = [0, 0]
             }
 
             if(x.frin){
-
+                layers[4][key] = [0, 0]
             }
 
             if(x.obj){
-
+                layers[3][key] = [0, 0]
             }
 
             if(x.decal){
-
+                layers[2][key] = [0, 0]
             }
 
             if(x.ter){
-
+                layers[1][key] = [0, 0]
             }
 
             if(x.back){
-
+                layers[0][key] = [0, 0]
             }
         }
     }
