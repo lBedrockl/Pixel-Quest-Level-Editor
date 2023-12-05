@@ -17,7 +17,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.0.0';
+var editorVer = '1.0.2';
 var currentSize = [1, 1];
 
 var selection = [0, 0];
@@ -54,7 +54,7 @@ tilesetContainer.addEventListener("mousedown", (event) => {
 
 //select volume
 volumeContainer.addEventListener("mousedown", (event) => {
-    setLayer(5)
+    if(currentLayer != 5) setLayer(5)
     selectionVol = getCoords(event, 16);
     volumeSelection.style.left = selectionVol[0] * 16 + "px";
     volumeSelection.style.top = selectionVol[1] * 16 + "px";
@@ -62,7 +62,7 @@ volumeContainer.addEventListener("mousedown", (event) => {
 
 //Select object from the objects grid
 objectContainer.addEventListener("mousedown", (event) => {
-    setLayer(3)
+    if(currentLayer != 3) setLayer(3)
     selectionObj = getCoords(event, 48);
     objectSelection.style.left = selectionObj[0] * 48 + "px";
     objectSelection.style.top = selectionObj[1] * 48 + "px";
@@ -207,9 +207,14 @@ function importBin(binFile){
             let objVal = x.text.slice(x.text.indexOf('<Objects') + 25,x.text.indexOf('</Objects>'))
             let frinVal = x.text.slice(x.text.indexOf('<Fringe') + 22,x.text.indexOf('</Fringe>'))
             let decalVal = x.text.slice(x.text.indexOf('<Decal') + 21,x.text.indexOf('</Decal>'))
+            
+            var key = clicked[0] + "-" + clicked[1];
 
+            if(x.vol){
+                layer[5][key] = [0][0]
+            }
 
-            if(x.ter){
+            if(x.frin){
 
             }
 
@@ -217,7 +222,15 @@ function importBin(binFile){
 
             }
 
-            if(x.vol){
+            if(x.decal){
+
+            }
+
+            if(x.ter){
+
+            }
+
+            if(x.back){
 
             }
         }
