@@ -17,7 +17,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.1.0';
+var editorVer = '1.2.0';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [1, 1];
 
@@ -158,8 +158,8 @@ function exportLevel(name) {
         output += '</Row>\n'
     }
 
-	localStorage.setItem(name, JSON.stringify(layers))
-    localStorage.setItem(`${name}Size`, JSON.stringify(currentSize))
+	// localStorage.setItem(name, JSON.stringify(layers))
+    // localStorage.setItem(`${name}Size`, JSON.stringify(currentSize))
 
     let start = `<root>
 <LevelData editorVersion="${editorVer}" uuid="${self.crypto.randomUUID()}"/>
@@ -170,9 +170,11 @@ function exportLevel(name) {
     return `${start}\n${output}${end}` //xml output
 }
 
-function importBin(binFile){
-    let bin //= fs.readFileSync(`./binaryData/${binN}`, 'utf8')
-    
+async function importBin(event){
+    clearCanvas()
+    const file = event.target.files.item(0)
+    const bin = await file.text('utf8');
+
     let rows = bin.split('<Row>\n') //make rows
     let rowArray = []
     for(let x of rows){
@@ -184,7 +186,7 @@ function importBin(binFile){
     for(let row of rowArray){
         col[i] = row.split('<Column')
         .map(x => ({
-            start: x.match('level') != null, //anti start stuff
+            start: x.match('<Level') != null, //anti start stuff
             emp: x.match('/>') != null,
     
             frin: x.match('<Fringe') != null, //tile sets
@@ -196,48 +198,66 @@ function importBin(binFile){
             vol: x.match('<Volume') != null, // 8-15 tutorial signs
             text: x 
         }))
+        
         i++
     }
 
-    let x = col[parseInt(py)][parseInt(px)]
-    if(!x.start){
-        if(!x.emp){ //do stuff to image here
-            let volVal = x.text.slice(x.text.indexOf('<Volume') + 23,x.text.indexOf('</Volume>'))
-            let backVal = x.text.slice(x.text.indexOf('<Background') + 26,x.text.indexOf('</Background>'))
-            let terVal = x.text.slice(x.text.indexOf('<Terrain') + 23,x.text.indexOf('</Terrain>'))
-            let objVal = x.text.slice(x.text.indexOf('<Objects') + 25,x.text.indexOf('</Objects>'))
-            let frinVal = x.text.slice(x.text.indexOf('<Fringe') + 22,x.text.indexOf('</Fringe>'))
-            let decalVal = x.text.slice(x.text.indexOf('<Decal') + 21,x.text.indexOf('</Decal>'))
-            
-
-            //convert value to tilesheet
-            var key = 0 + "-" + 0;
-
-            if(x.vol){
-                layers[5][key] = [0, 0]
-            }
-
-            if(x.frin){
-                layers[4][key] = [0, 0]
-            }
-
-            if(x.obj){
-                layers[3][key] = [0, 0]
-            }
-
-            if(x.decal){
-                layers[2][key] = [0, 0]
-            }
-
-            if(x.ter){
-                layers[1][key] = [0, 0]
-            }
-
-            if(x.back){
-                layers[0][key] = [0, 0]
+    for(var px = 0;px < col[1].length - 1; px++){
+        for(var py = 0;py < rows.length - 1; py++){
+            let x = col[parseInt(py) + 1][parseInt(px) + 1]
+            if(!x.start){
+                if(!x.emp){
+                    let volVal = x.text.slice(x.text.indexOf('<Volume') + 23,x.text.indexOf('</Volume>'))
+                    let backVal = x.text.slice(x.text.indexOf('<Background') + 26,x.text.indexOf('</Background>'))
+                    let terVal = x.text.slice(x.text.indexOf('<Terrain') + 23,x.text.indexOf('</Terrain>'))
+                    let objVal = x.text.slice(x.text.indexOf('<Objects') + 25,x.text.indexOf('</Objects>'))
+                    let frinVal = x.text.slice(x.text.indexOf('<Fringe') + 22,x.text.indexOf('</Fringe>'))
+                    let decalVal = x.text.slice(x.text.indexOf('<Decal') + 21,x.text.indexOf('</Decal>'))
+                    
+                    let tilesheetX
+                    let tilesheetY
+        
+                    if(x.vol){
+                        tilesheetX = volVal % 6
+                        tilesheetY = (volVal - (volVal % 6)) / 6
+                        layers[5][px + "-" + py] = [tilesheetX, tilesheetY]
+                    }
+        
+                    if(x.frin){
+                        tilesheetX = frinVal % 6
+                        tilesheetY = (frinVal - (frinVal % 6)) / 6
+                        layers[4][px + "-" + py] = [tilesheetX, tilesheetY]
+                    }
+        
+                    if(x.obj){
+                        tilesheetX = objVal % 2
+                        tilesheetY = (objVal - (objVal % 2)) / 2
+                        layers[3][px + "-" + py] = [tilesheetX, tilesheetY]
+                    }
+        
+                    if(x.decal){
+                        tilesheetX = decalVal % 6
+                        tilesheetY = (decalVal - (decalVal % 6)) / 6
+                        layers[2][px + "-" + py] = [tilesheetX, tilesheetY]
+                    }
+        
+                    if(x.ter){
+                        tilesheetX = terVal % 6
+                        tilesheetY = (terVal - (terVal % 6)) / 6
+                        layers[1][px + "-" + py] = [tilesheetX, tilesheetY]
+                    }
+        
+                    if(x.back){
+                        tilesheetX = backVal % 6
+                        tilesheetY = (backVal - (backVal % 6)) / 6
+                        layers[0][px + "-" + py] = [tilesheetX, tilesheetY]
+                    }
+                }
             }
         }
     }
+    console.log(layers)
+    draw()
 }
 
 //Reset state to empty
@@ -259,13 +279,13 @@ function setLayer(newLayer) {
    draw()
 }
 
-function reloadEditor(toLoad){
-	layers = JSON.parse(localStorage.getItem(toLoad))
-    var json = JSON.parse(localStorage.getItem(`${toLoad}Size`))
-    setCanvasSize(json[0],json[1]) //find size based on file
-	draw()
-    setLayer(1)
-}
+// function reloadEditor(toLoad){
+// 	layers = JSON.parse(localStorage.getItem(toLoad))
+//     var json = JSON.parse(localStorage.getItem(`${toLoad}Size`))
+//     setCanvasSize(json[0],json[1]) //find size based on file
+// 	draw()
+//     setLayer(1)
+// }
 
 function draw() {
    var ctx = canvas.getContext("2d");
@@ -275,7 +295,7 @@ function draw() {
    ctx.fillStyle = "black";
    let mod = 0
    for(var x = 0;x < canvas.width; x+= 16){
-       for(var y = 0;y < canvas.width; y+= 16){
+       for(var y = 0;y < canvas.height; y+= 16){
            if(mod % 2 == 0) ctx.fillRect(x, y, 16, 16)
            mod++
        }
@@ -367,6 +387,7 @@ function setCanvasSize(width, height){ //in room size
     canvas.width = 640 * parseInt(width)
     canvas.height = 480 * parseInt(height)
     currentSize = [parseInt(width), parseInt(height)]
+    draw()
 }
 
 //Initialize app when tileset source is done loading
@@ -379,6 +400,7 @@ objectImage.src = "images/objectSheet.png";
 tilesetImage.src = "images/tilesheet.png";
 
 function download(filename) {
+    if(filename == '') filename = 'unnamed'
     var pom = document.createElement('a');
     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportLevel(filename)));
     pom.setAttribute('download', `${filename}.bin`);
