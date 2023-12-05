@@ -1,16 +1,27 @@
-Python is required for the webserver, otherwise the html cant access the tilesheets
+# README
+#### Python is required for the webserver, otherwise the html cant access the tilesheets
 
-Run.bat will start the editor
+#### Run.bat will start the editor
 
 
--Current Features-
+### [Current Features]
 
-Volume Layer for hitboxes, blue = solid, green = oneway, pink = moving object reflect, red = killbox
+- Volume Layer for hitboxes 
 
-Level must have a Blue door (Start) and a Red Door (End)
+blue = solid
 
-Max size of a level is 3x5, 2x2 is already super laggy
+green = oneway
 
-How to use editor: tut here
+pink = moving object reflect
 
-Adding level to swf: [link](https://github.com/lBedrockl/Pixel-Quest-Level-Editor/tree/master/level%20loader%20hack)
+red = killbox
+
+- Level must have a Blue door (Start) and a Red Door (End)
+
+- Max size of a level is 6x10, 4x4 is already super laggy (1x1 = 20 x 15 tiles)
+
+### [Tutorials]
+
+- How to use editor: tut here
+
+- Adding level to swf: [link](https://github.com/lBedrockl/Pixel-Quest-Level-Editor/tree/master/level%20loader%20hack)

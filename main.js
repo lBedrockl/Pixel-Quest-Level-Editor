@@ -19,11 +19,13 @@ var objectImage = document.querySelector("#object-source");
 
 var editorVer = '1.2.1';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
-var currentSize = [1, 1];
+var currentSize = [2, 2];
 
 var selection = [0, 0];
 var selectionObj = [0, 0];
 var selectionVol = [0, 0];
+
+var showVolumes = false;
 
 var isMouseDown = false;
 var currentLayer = 0;
@@ -312,9 +314,9 @@ function draw() {
             }
          }else if(curLayer == 5){
             usedImage = volumeImage
-            if(currentLayer == 5){
+            if(currentLayer == 5 || currentLayer == 6 && showVolumes){
 				ctx.globalAlpha = 1
-            }else{
+            }else if(!showVolumes){
                 ctx.globalAlpha = 0
             }
          }else{
@@ -403,4 +405,9 @@ function download(filename) {
     pom.click();
   
     document.body.removeChild(pom);
+}
+
+function volSwitch(checked){
+    showVolumes = checked
+    draw()
 }
