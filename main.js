@@ -17,7 +17,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.2.0';
+var editorVer = '1.2.1';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [1, 1];
 
@@ -158,9 +158,6 @@ function exportLevel(name) {
         output += '</Row>\n'
     }
 
-	// localStorage.setItem(name, JSON.stringify(layers))
-    // localStorage.setItem(`${name}Size`, JSON.stringify(currentSize))
-
     let start = `<root>
 <LevelData editorVersion="${editorVer}" uuid="${self.crypto.randomUUID()}"/>
 <Level name="${name}">`
@@ -256,7 +253,6 @@ async function importBin(event){
             }
         }
     }
-    console.log(layers)
     draw()
 }
 
@@ -279,14 +275,6 @@ function setLayer(newLayer) {
    draw()
 }
 
-// function reloadEditor(toLoad){
-// 	layers = JSON.parse(localStorage.getItem(toLoad))
-//     var json = JSON.parse(localStorage.getItem(`${toLoad}Size`))
-//     setCanvasSize(json[0],json[1]) //find size based on file
-// 	draw()
-//     setLayer(1)
-// }
-
 function draw() {
    var ctx = canvas.getContext("2d");
    ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -296,9 +284,8 @@ function draw() {
    let mod = 0
    for(var x = 0;x < canvas.width; x+= 16){
        for(var y = 0;y < canvas.height; y+= 16){
-           if(mod % 2 == 0) ctx.fillRect(x, y, 16, 16)
-           mod++
-       }
+           if(((y/16) + mod) % 2 == 0) ctx.fillRect(x, y, 16, 16)
+       } 
        mod++
    }
 
@@ -384,15 +371,15 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
 }
 
 function setCanvasSize(width, height){ //in room size
-    canvas.width = 640 * parseInt(width)
-    canvas.height = 480 * parseInt(height)
+    canvas.width = 640 * (parseInt(width) / 2)
+    canvas.height = 480 * (parseInt(height) / 2)
     currentSize = [parseInt(width), parseInt(height)]
     draw()
 }
 
 //Initialize app when tileset source is done loading
 tilesetImage.onload = function(){
-   setCanvasSize(1,1)
+   setCanvasSize(2,2)
    setLayer(1)
 }
 volumeImage.src = "images/volumeSheet.png"

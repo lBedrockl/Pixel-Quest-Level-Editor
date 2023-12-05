@@ -21,8 +21,8 @@
                 <form id="reloadForm" onsubmit="clearCanvas();setCanvasSize(this['roomX'].value,this['roomY'].value);this['roomX'].value = '';this['roomY'].value = '';return false;">
                     <input type="submit" class="button-as-link" value="Room Size">
                     <ul class="layers">
-                        <input class="input" type="number" min=1 max=3 required=true placeholder="X" name="roomX"></input>
-                        <input class="input" type="number"  min=1 max=5 required=true placeholder="Y" name="roomY"></input>
+                        <input class="input" type="number" min=2 max=6 required=true placeholder="X" name="roomX"></input>
+                        <input class="input" type="number"  min=2 max=10 required=true placeholder="Y" name="roomY"></input>
                     </ul>
                 </form>
             </ul>
@@ -35,7 +35,7 @@
         }
         return false;">
             <input type="submit" class="primary-button" value='Download Level'>
-            <input type="file" id="level" name="level" accept=".bin" onChange="importBin(event)"/>
+            <input type="file" id="level" name="level" accept=".bin" onChange="importBin(event);form.reset();"/>
             <!-- <input type="submit" class="primary-button" value='Reload Save'> -->
             <ul class="layers">
             <label>Level Name: </label>
