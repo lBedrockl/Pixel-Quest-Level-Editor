@@ -8,9 +8,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - MINOR Project version is displayed by the title
 
-### Changed
-
-### Fixed
-
 ## [1.0.0]
 - First working version
