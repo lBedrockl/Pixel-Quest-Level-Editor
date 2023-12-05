@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.2.1]
 ### Added
 - Room size now scales by .5
-- Resizing the rooms *Bigger* will now not erase old tiles
+- Resizing the rooms *Bigger* will now not erase old tiles, this means importing levels and making the editor bigger now works
 
 ### Fixed
 - Canvas tiling fixed
