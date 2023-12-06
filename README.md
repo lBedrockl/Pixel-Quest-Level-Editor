@@ -24,4 +24,4 @@ red = killbox
 
 - How to use editor: tut here
 
-- Adding level to swf: [link](https://github.com/lBedrockl/Pixel-Quest-Level-Editor/tree/master/level%20loader%20hack)
+- Adding level to swf: [link](https://github.com/lBedrockl/Pixel-Quest-Level-Editor/tree/master/custom%20level%20loader%20hack)
