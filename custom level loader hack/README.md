@@ -43,10 +43,10 @@ Remember to save!
 
 ![remove](resources/guide/07%20remove.png)
 
-If you added a second level, and then remove the first on, in-game you will see something like this:
+If you added a second level, and then remove the first one, in-game you will see something like this:
 
 ![new level go first](resources/guide/08%20new%20level%20go%20first.png)
 
-As you can notice, the level number showing in-game is `01` even though we are using the `Level_Loader_02`. That's because the hack skips all empty levels. They don't need to start at `Level_Loader_01` and they don't need to stay consecutive. If you replace `Level_Loader_09` with a new level, in-game the numbers will adjust automatically.
+The level number showing in-game is `01` even though you are using the `Level_Loader_02`. That's because the hack skips all empty levels. They don't need to start at `Level_Loader_01` and they don't need to stay consecutive. If you replace `Level_Loader_09` with a new level, in-game the numbers will adjust automatically.
 
 ![level skip](resources/guide/09%20level%20skip.png)
