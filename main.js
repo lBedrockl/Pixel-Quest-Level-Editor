@@ -255,6 +255,7 @@ async function importBin(event){
             }
         }
     }
+    setCanvasSize(col[1].length / 20, rows.length / 15, false)
     draw()
 }
 
@@ -372,13 +373,13 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
     }
 }
 
-function setCanvasSize(width, height){ //in room size
+function setCanvasSize(width, height, clear){ //in room size
     let w = parseInt(width)
     let h = parseInt(height)
     canvas.width = 640 * (w / 2)
     canvas.height = 480 * (h / 2)
 
-    if(currentSize[0] > w || currentSize[1] > h) clearCanvas()
+    if(currentSize[0] > w || currentSize[1] > h) if(clear) clearCanvas()
 
     currentSize = [w, h]
     draw()
@@ -386,7 +387,7 @@ function setCanvasSize(width, height){ //in room size
 
 //Initialize app when tileset source is done loading
 tilesetImage.onload = function(){
-   setCanvasSize(2,2)
+   setCanvasSize(2,2,true)
    setLayer(1)
 }
 volumeImage.src = "images/volumeSheet.png"

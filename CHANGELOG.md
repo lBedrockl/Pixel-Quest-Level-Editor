@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Platforms are now crisp in the editor and indicate where the volume should be
 
+### Fixed
+- Auto resize canvas when importing
+
 ## [1.2.1]
 ### Added
 - Room size now scales by .5
