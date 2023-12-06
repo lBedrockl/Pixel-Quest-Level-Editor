@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0]
+## Changed
+- MAJOR Consistent dashes that last exactly 7 frames
+- Improved sample level to showcase 10 idols, and added background
+
+## Fixed
+- Tutorial bubbles will only appear on the original levels
+- The game doesn't crash even with every level empty and skipped
+
 ## [1.0.0]
 First working version
 ### Added
