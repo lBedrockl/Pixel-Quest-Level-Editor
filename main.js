@@ -71,6 +71,8 @@ objectContainer.addEventListener("mousedown", (event) => {
     objectSelection.style.top = selectionObj[1] * 48 + "px";
 });
 
+var boxPlace = false
+var boxStart
 //Handler for placing new tiles on the map
 function addTile(mouseEvent) {
     if(currentLayer != 6){
@@ -79,16 +81,56 @@ function addTile(mouseEvent) {
         
         if (mouseEvent.shiftKey) {
             delete layers[currentLayer][key];
-        } else {
-            if(currentLayer == 3){
-                layers[currentLayer][key] = [selectionObj[0], selectionObj[1]];
-            }else if(currentLayer == 5){
+        }else if(mouseEvent.ctrlKey || boxPlace){
+            if(boxPlace){
+                //loop over everytile within bounds
+                if(boxStart[0] < clicked[0]){
+                    for(let i = boxStart[0]; i <= clicked[0];i++){
+                        if(boxStart[1] < clicked[1]){
+                            for(let o = boxStart[1]; o <= clicked[1];o++){
+                                loopPlace(i + "-" + o)
+                            }
+                        }else{
+                            for(let o = boxStart[1]; o >= clicked[1];o--){
+                                loopPlace(i + "-" + o)
+                            }
+                        }
+                    }
+                }else{
+                    for(let i = boxStart[0]; i >= clicked[0];i--){
+                        if(boxStart[1] < clicked[1]){
+                            for(let o = boxStart[1]; o <= clicked[1];o++){
+                                loopPlace(i + "-" + o)
+                            }
+                        }else{
+                            for(let o = boxStart[1]; o >= clicked[1];o--){
+                                loopPlace(i + "-" + o)
+                            }
+                        }
+                    }
+                }
+            }else{
+                boxStart = clicked
+            }
+            boxPlace = !boxPlace
+        }else {
+            if(currentLayer == 5){
                 layers[currentLayer][key] = [selectionVol[0], selectionVol[1]];
             }else{
                 layers[currentLayer][key] = [selection[0], selection[1]];
             }
         }
         draw();
+    }
+}
+
+function loopPlace(newKey){
+    if(currentLayer == 3){
+        layers[currentLayer][newKey] = [selectionObj[0], selectionObj[1]];
+    }else if(currentLayer == 5){
+        layers[currentLayer][newKey] = [selectionVol[0], selectionVol[1]];
+    }else{
+        layers[currentLayer][newKey] = [selection[0], selection[1]];
     }
 }
 

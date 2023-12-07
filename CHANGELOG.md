@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [1.2.2]
+### Added
+- Box placement, Hold crtl then click somewhere else
+
 ### Changed
 - Platforms are now crisp in the editor and indicate where the volume should be
 

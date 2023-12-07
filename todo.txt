@@ -4,8 +4,6 @@ one screen is 40 x 30
 add scaling of the canvas, must fix getting mouse coords, add a slider to scale it
 
 
-when importing bin auto resize canvas
-
 
 add a box place at a later point, hold crtl
 
@@ -15,3 +13,12 @@ fix the fucking image select thing, i dont wanna
 
 sometimes ghost volumes????
 
+
+
+
+
+
+New Feature Ideas
+
+per object start delay, would need a new tile sheet for 1-15, empty for random
+<Objects sheet="Objects" seed="3">0</Objects>
