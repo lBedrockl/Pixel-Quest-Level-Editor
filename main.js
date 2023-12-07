@@ -26,6 +26,7 @@ var selectionObj = [0, 0];
 var selectionVol = [0, 0];
 
 var showVolumes = false;
+var placingBox = false;
 
 var isMouseDown = false;
 var currentLayer = 0;
@@ -79,20 +80,18 @@ function addTile(mouseEvent) {
         var clicked = getCoords(event, 16);
         var key = clicked[0] + "-" + clicked[1];
         
-        if (mouseEvent.shiftKey) {
-            delete layers[currentLayer][key];
-        }else if(mouseEvent.ctrlKey || boxPlace){
+        if(mouseEvent.ctrlKey || boxPlace){
             if(boxPlace){
                 //loop over everytile within bounds
                 if(boxStart[0] < clicked[0]){
                     for(let i = boxStart[0]; i <= clicked[0];i++){
                         if(boxStart[1] < clicked[1]){
                             for(let o = boxStart[1]; o <= clicked[1];o++){
-                                loopPlace(i + "-" + o)
+                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
                             }
                         }else{
                             for(let o = boxStart[1]; o >= clicked[1];o--){
-                                loopPlace(i + "-" + o)
+                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
                             }
                         }
                     }
@@ -100,11 +99,11 @@ function addTile(mouseEvent) {
                     for(let i = boxStart[0]; i >= clicked[0];i--){
                         if(boxStart[1] < clicked[1]){
                             for(let o = boxStart[1]; o <= clicked[1];o++){
-                                loopPlace(i + "-" + o)
+                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
                             }
                         }else{
                             for(let o = boxStart[1]; o >= clicked[1];o--){
-                                loopPlace(i + "-" + o)
+                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
                             }
                         }
                     }
@@ -113,8 +112,12 @@ function addTile(mouseEvent) {
                 boxStart = clicked
             }
             boxPlace = !boxPlace
-        }else {
-            if(currentLayer == 5){
+        }else if(mouseEvent.shiftKey){
+            delete layers[currentLayer][key];
+        }else{
+            if(currentLayer == 3){
+                layers[currentLayer][newKey] = [selectionObj[0], selectionObj[1]];
+            }else if(currentLayer == 5){
                 layers[currentLayer][key] = [selectionVol[0], selectionVol[1]];
             }else{
                 layers[currentLayer][key] = [selection[0], selection[1]];
@@ -124,14 +127,17 @@ function addTile(mouseEvent) {
     }
 }
 
-function loopPlace(newKey){
-    if(currentLayer == 3){
-        layers[currentLayer][newKey] = [selectionObj[0], selectionObj[1]];
-    }else if(currentLayer == 5){
-        layers[currentLayer][newKey] = [selectionVol[0], selectionVol[1]];
+function loopPlace(newKey, remove){
+    if(remove){
+        delete layers[currentLayer][newKey];
     }else{
-        layers[currentLayer][newKey] = [selection[0], selection[1]];
+        if(currentLayer == 5){
+            layers[currentLayer][newKey] = [selectionVol[0], selectionVol[1]];
+        }else{
+            layers[currentLayer][newKey] = [selection[0], selection[1]];
+        }
     }
+    
 }
 
 //Bind mouse events for painting (or removing) tiles on click/drag
@@ -143,6 +149,8 @@ canvas.addEventListener("mouseup", () => {
 });
 canvas.addEventListener("mouseleave", () => {
    isMouseDown = false;
+   boxPlace = false;
+   draw()
 });
 canvas.addEventListener("mousedown", addTile);
 canvas.addEventListener("mousemove", (event) => {
@@ -332,6 +340,11 @@ function draw() {
            if(((y/16) + mod) % 2 == 0) ctx.fillRect(x, y, 16, 16)
        } 
        mod++
+   }
+   
+   ctx.fillStyle = "red";
+   if(boxPlace){
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
    }
 
    var size_of_crop = 16;
