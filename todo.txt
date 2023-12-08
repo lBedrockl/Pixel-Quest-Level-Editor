@@ -6,6 +6,7 @@ when holding alt you can drag around the canvas
 fix getting mouse coords, can select out of bounds stuff
 
 
+- box place removing always shows small box at box place start, weird
 
 
 New Feature Ideas

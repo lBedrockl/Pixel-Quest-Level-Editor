@@ -30,6 +30,7 @@ var showVolumes = false;
 var placingBox = false;
 
 var isMouseDown = false;
+var isMouseOn = false;
 var currentLayer = 0;
 var layers = [
    //background
@@ -143,45 +144,49 @@ function loopPlace(newKey, remove){
 
 //Bind mouse events for painting (or removing) tiles on click/drag
 canvas.addEventListener("mousedown", (event) => {
-    isMouseDown = true;
+    isMouseDown = true
     updateHover(event)
+    addTile(event)
 });
-canvas.addEventListener("mousedown", addTile);
 
 canvas.addEventListener("mouseup", (event) => {
-    isMouseDown = false;
+    isMouseDown = false
     updateHover(event)
 });
 
 canvas.addEventListener("mouseleave", () => {
-    isMouseDown = false;
-    boxPlace = false;
+    boxPlace = false
+    isMouseDown = false
+    isMouseOn = false
     canvasSelection.style.outline = 'black'
 });
 
 canvas.addEventListener("mousemove", (event) => {
+    isMouseOn = true
     if(isMouseDown && !boxPlace) addTile(event)
     updateHover(event)
 });
 
-onkeydown = updateHover;
-onkeyup = updateHover;
+onkeydown = updateHover
+onkeyup = updateHover
 
 function updateHover(e){
-    if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
-    else if(boxPlace) canvasSelection.style.outline = '3px solid lime'
-    else canvasSelection.style.outline = '3px solid cyan'
-    var coords = getCoords(e, 16)
-    if(boxPlace){
-        canvasSelection.style.width = (Math.abs(boxStart[0] - coords[0]) + 1) * 16 + 'px'
-        canvasSelection.style.height = (Math.abs(boxStart[1] - coords[1]) + 1) * 16 + 'px'
-        canvasSelection.style.left = canvas.offsetLeft + Math.min(boxStart[0], coords[0]) * 16 + 'px'
-        canvasSelection.style.top = canvas.offsetTop + Math.min(boxStart[1], coords[1]) * 16 + 'px'
-    }else{
-        canvasSelection.style.width = '16px'
-        canvasSelection.style.height = '16px'
-        canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
-        canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
+    if(isMouseOn){
+        if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
+        else if(boxPlace) canvasSelection.style.outline = '3px solid lime'
+        else canvasSelection.style.outline = '3px solid cyan'
+        var coords = getCoords(e, 16)
+        if(boxPlace){
+            canvasSelection.style.width = (Math.abs(boxStart[0] - coords[0]) + 1) * 16 + 'px'
+            canvasSelection.style.height = (Math.abs(boxStart[1] - coords[1]) + 1) * 16 + 'px'
+            canvasSelection.style.left = canvas.offsetLeft + Math.min(boxStart[0], coords[0]) * 16 + 'px'
+            canvasSelection.style.top = canvas.offsetTop + Math.min(boxStart[1], coords[1]) * 16 + 'px'
+        }else{
+            canvasSelection.style.width = '16px'
+            canvasSelection.style.height = '16px'
+            canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
+            canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
+        }
     }
 }
 
