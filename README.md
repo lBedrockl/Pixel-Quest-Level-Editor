@@ -8,13 +8,13 @@
 
 - Volume Layer for hitboxes 
 
-blue = solid
+  - blue = solid
 
-green = oneway
+  - green = oneway
 
-pink = moving object reflect
+  - pink = moving object reflect
 
-red = killbox
+  - red = killbox
 
 - Level must have a Blue door (Start) and a Red Door (End)
 
