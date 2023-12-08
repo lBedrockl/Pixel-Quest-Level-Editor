@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 
+## [1.2.3]
+### Added
+- Box place visual upgrade
+
+### Fixed
+- Object placement fixed, oops
+- No drag place while box place is on
+- Clicking on the same tile will not reset it to first one
+
+### Removed
+- Red canvas for box place
+
 ## [1.2.2]
 ### Added
 - Box placement

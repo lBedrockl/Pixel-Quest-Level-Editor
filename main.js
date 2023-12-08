@@ -1,4 +1,5 @@
 var canvas = document.querySelector("canvas");
+var canvasSelection = document.querySelector(".canvas-container_selection");
 
 //volumes
 var volumeContainer = document.querySelector(".volume-container");
@@ -17,7 +18,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.2.2';
+var editorVer = '1.2.3';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [2, 2];
 
@@ -80,7 +81,7 @@ function addTile(mouseEvent) {
         var clicked = getCoords(event, 16);
         var key = clicked[0] + "-" + clicked[1];
         
-        if(mouseEvent.ctrlKey || boxPlace){
+        if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){
             if(boxPlace){
                 //loop over everytile within bounds
                 if(boxStart[0] < clicked[0]){
@@ -116,7 +117,7 @@ function addTile(mouseEvent) {
             delete layers[currentLayer][key];
         }else{
             if(currentLayer == 3){
-                layers[currentLayer][newKey] = [selectionObj[0], selectionObj[1]];
+                layers[currentLayer][key] = [selectionObj[0], selectionObj[1]];
             }else if(currentLayer == 5){
                 layers[currentLayer][key] = [selectionVol[0], selectionVol[1]];
             }else{
@@ -142,21 +143,36 @@ function loopPlace(newKey, remove){
 
 //Bind mouse events for painting (or removing) tiles on click/drag
 canvas.addEventListener("mousedown", () => {
-   isMouseDown = true;
-});
-canvas.addEventListener("mouseup", () => {
-   isMouseDown = false;
-});
-canvas.addEventListener("mouseleave", () => {
-   isMouseDown = false;
-   boxPlace = false;
-   draw()
+    isMouseDown = true;
+    if(boxPlace) canvasSelection.style.outline = 'black'
 });
 canvas.addEventListener("mousedown", addTile);
+canvas.addEventListener("mouseup", () => {
+    isMouseDown = false;
+});
+canvas.addEventListener("mouseleave", () => {
+    isMouseDown = false;
+    boxPlace = false;
+    draw()
+    canvasSelection.style.outline = 'black'
+});
+
 canvas.addEventListener("mousemove", (event) => {
-   if (isMouseDown) {
-      addTile(event);
-   }
+    if(isMouseDown && !boxPlace) {
+        addTile(event);
+    }
+    if(boxPlace){
+        canvasSelection.style.outline = '3px solid cyan'
+        var coords = getCoords(event, 16)
+
+        canvasSelection.style.width = (Math.abs(boxStart[0] - coords[0]) + 1) * 16 + 'px'
+        canvasSelection.style.height = (Math.abs(boxStart[1] - coords[1]) + 1) * 16 + 'px'
+
+        canvasSelection.style.left = canvas.offsetLeft + Math.min(boxStart[0], coords[0]) * 16 + 'px'
+        canvasSelection.style.top = canvas.offsetTop + Math.min(boxStart[1], coords[1]) * 16 + 'px'
+    }else{
+        canvasSelection.style.outline = 'black'
+    }
 });
 
 //Utility for getting coordinates of mouse click
@@ -340,11 +356,6 @@ function draw() {
            if(((y/16) + mod) % 2 == 0) ctx.fillRect(x, y, 16, 16)
        } 
        mod++
-   }
-   
-   ctx.fillStyle = "red";
-   if(boxPlace){
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
    }
 
    var size_of_crop = 16;
