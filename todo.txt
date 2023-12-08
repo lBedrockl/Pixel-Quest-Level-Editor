@@ -1,11 +1,9 @@
 one screen is 40 x 30
 
 
-add scaling of the canvas, must fix getting mouse coords, add a slider to scale it
+when holding alt you can drag around the canvas
 
-fix the fucking image select thing, i dont wanna
-
-sometimes ghost volumes???? same issues as above
+fix getting mouse coords, can select out of bounds stuff
 
 
 

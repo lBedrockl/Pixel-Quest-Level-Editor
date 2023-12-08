@@ -18,7 +18,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.2.3';
+var editorVer = '1.2.4';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [2, 2];
 
@@ -142,38 +142,48 @@ function loopPlace(newKey, remove){
 }
 
 //Bind mouse events for painting (or removing) tiles on click/drag
-canvas.addEventListener("mousedown", () => {
+canvas.addEventListener("mousedown", (event) => {
     isMouseDown = true;
-    if(boxPlace) canvasSelection.style.outline = 'black'
+    updateHover(event)
 });
 canvas.addEventListener("mousedown", addTile);
-canvas.addEventListener("mouseup", () => {
+
+canvas.addEventListener("mouseup", (event) => {
     isMouseDown = false;
+    updateHover(event)
 });
+
 canvas.addEventListener("mouseleave", () => {
     isMouseDown = false;
     boxPlace = false;
-    draw()
     canvasSelection.style.outline = 'black'
 });
 
 canvas.addEventListener("mousemove", (event) => {
-    if(isMouseDown && !boxPlace) {
-        addTile(event);
-    }
-    if(boxPlace){
-        canvasSelection.style.outline = '3px solid cyan'
-        var coords = getCoords(event, 16)
+    if(isMouseDown && !boxPlace) addTile(event)
+    updateHover(event)
+});
 
+onkeydown = updateHover;
+onkeyup = updateHover;
+
+function updateHover(e){
+    if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
+    else if(boxPlace) canvasSelection.style.outline = '3px solid lime'
+    else canvasSelection.style.outline = '3px solid cyan'
+    var coords = getCoords(e, 16)
+    if(boxPlace){
         canvasSelection.style.width = (Math.abs(boxStart[0] - coords[0]) + 1) * 16 + 'px'
         canvasSelection.style.height = (Math.abs(boxStart[1] - coords[1]) + 1) * 16 + 'px'
-
         canvasSelection.style.left = canvas.offsetLeft + Math.min(boxStart[0], coords[0]) * 16 + 'px'
         canvasSelection.style.top = canvas.offsetTop + Math.min(boxStart[1], coords[1]) * 16 + 'px'
     }else{
-        canvasSelection.style.outline = 'black'
+        canvasSelection.style.width = '16px'
+        canvasSelection.style.height = '16px'
+        canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
+        canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
     }
-});
+}
 
 //Utility for getting coordinates of mouse click
 function getCoords(e, px) { //smth is wrong with this

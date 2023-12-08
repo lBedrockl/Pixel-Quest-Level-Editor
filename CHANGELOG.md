@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.4]
+### Changed
+- When holding shift box is Red
+- Box place outline is Lime
+- Normal hover shows box where tile goes, and its Cyan
+- Tilesheet now has cyan behind so transparent tiles are easier to see
 
+### Fixed
+- Should auto clear the cache
 
 ## [1.2.3]
 ### Added
