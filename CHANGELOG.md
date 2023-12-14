@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0]
+### Added
+- Lost gifts toggle
+- Favicon
+
+### Changed
+- Better looking checkboxes
+- Cleaned up platform sprites
+- Tab now shows correct name
+
 ## [1.2.4]
 ### Changed
 - When holding shift box is Red

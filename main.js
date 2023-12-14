@@ -18,7 +18,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.2.4';
+var editorVer = '1.3.0';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 var currentSize = [2, 2];
 
@@ -491,5 +491,16 @@ function download(filename) {
 
 function volSwitch(checked){
     showVolumes = checked
+    draw()
+}
+
+function lostGiftsToggle(checked){
+    if(checked){
+        tilesetImage.src = "images/losttilesheet.png";
+        objectImage.src = "images/lostobjectSheet.png";
+    }else{
+        tilesetImage.src = "images/tilesheet.png";
+        objectImage.src = "images/objectSheet.png";
+    }
     draw()
 }

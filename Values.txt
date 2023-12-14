@@ -52,6 +52,4 @@ Volume
 
 
 
-Fringe > Objects
-
-Decal > Terrain > Background
+Fringe > Objects > Decal > Terrain > Background
