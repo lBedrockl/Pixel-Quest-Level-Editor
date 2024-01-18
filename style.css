@@ -146,16 +146,8 @@ canvas {
   color: rgb(27, 190, 185);
 }
 
-.button-as-link {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  text-decoration: underline;
-  background: transparent;
-  color: #a3a4b7;
-  border: 0;
-  outline: 0;
-  cursor: pointer;
+.buttons {
+    padding-right: 10px;
 }
 
 .primary-button {
@@ -237,30 +229,41 @@ input[type=checkbox]:checked:after {
     left: 2px;
 }
 
-
-/* .hidden[type=checkbox]:before {
-    content: "";
-    display: block;
+.tooltip-text {
+    visibility: hidden;
     position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 0;
-    left: 0;
-    border: 2px solid #1a1a1a;
-    background-color: rgb(0, 0, 0);
-}
+    z-index: 1;
+    width: 150px;
+    color: white;
+    font-size: 12px;
+    background-color: rgb(16, 113, 110);
+    border-radius: 10px;
+    padding: 5px 10px 5px 10px;
 
-.hidden[type=checkbox]:checked:after {
-    content: "";
-    display: block;
-    width: 5px;
-    height: 10px;
-    border: solid rgb(0, 255, 255, 1);
-    border-width: 0 2px 2px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    position: absolute;
-    top: 2px;
-    left: 6px;
-} */
+    top: 25px;
+    left: -50%;
+  }
+
+  .hover-text:hover .tooltip-text {
+    visibility: visible;
+  }
+
+  .hover-text {
+    position: relative;
+    display: inline-block;
+    font-family: Arial;
+    text-align: center;
+    background: rgb(16, 113, 110);
+    padding: 5px 12px;
+    margin: 5px;
+    font-size: 15px;
+    border-radius: 100%;
+    color: #ffffff;
+  }
+
+  #fade {
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  
+  .hover-text:hover #fade { opacity: 1; }

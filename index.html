@@ -5,7 +5,7 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="expires" content="0">
-  <title>Pixel Quest Map Editor v1.3.0</title>
+  <title id="title">updated in main.js</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -21,14 +21,20 @@
         <ul class="layers">By Bedrock</ul>
         </h1>
     </a>
-        <div>
-            <ul><button class="button-as-link" onclick="clearCanvas()">Clear Canvas</button></ul>
+        <div class="buttons">
             <ul>
-                <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value,true);this['roomX'].value = '';this['roomY'].value = '';return false;">
-                    <input type="submit" class="button-as-link" value="Room Size">
+                <input type="submit" class="primary-button" value='Clear Canvas' onclick="clearCanvas();setCanvasSize(40,30);
+                document.getElementById('roomX').value = '40';document.getElementById('roomY').value = '30';">
+                <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value,true);return false;">
+                <input type="submit" class="primary-button" value='Set Room Size'>
                     <ul class="layers">
-                        <input class="input" type="number" min=2 max=6 required=true placeholder="X" name="roomX"></input>
-                        <input class="input" type="number"  min=2 max=10 required=true placeholder="Y" name="roomY"></input>
+                        <input class="input" type="number" min=40 max=160 required=true placeholder="X" id="roomX" name="roomX"></input>
+                        <input class="input" type="number"  min=30 max=180 required=true placeholder="Y" id="roomY" name="roomY"></input>
+                        <div class="hover-text">!
+                        <span class="tooltip-text" id="fade">This is by tile amount 40x30 is the default size
+                             IF YOU SHRINK THE ROOM SIZE THE CANVAS WILL CLEAR!!
+                        </span>
+                        </div>
                     </ul>
                 </form>
             </ul>
@@ -42,10 +48,9 @@
         return false;">
             <input type="submit" class="primary-button" value='Download Level'>
             <input type="file" id="level" name="level" accept=".bin" onChange="importBin(event);form.reset();"/>
-            <!-- <input type="submit" class="primary-button" value='Reload Save'> -->
             <ul class="layers">
             <label>Level Name: </label>
-            <textarea rows=1 cols=40 maxlength=36 require=true placeholder="Input" name="lvlName"></textarea>
+            <textarea rows=1 cols=40 maxlength=36 require=true placeholder="Input" id='lvlName' name="lvlName"></textarea>
             </ul>
         </form>
    </header>
@@ -106,5 +111,5 @@
       </div>
    </div>
 </div>
-<script src="./main.js?v=1.3.0"></script>
+<script src="./main.js?v=1.3.2"></script>
 </html>

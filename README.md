@@ -18,7 +18,7 @@
 
 - Level must have a Blue door (Start) and a Red Door (End)
 
-- Max size of a level is 6x10, 4x4 is already super laggy (1x1 = 20 x 15 tiles)
+- Room size is by tile, minimum 40 x 30, max 160 x 180
 
 ### [Tutorials]
 

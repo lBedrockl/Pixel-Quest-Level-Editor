@@ -4,12 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.3.1]
+## [1.3.2]
 ### Added
-- Title links to github page
+- Little info popup for room size
 
 ### Changed
-- Lost gifts toggle more noticable
+- Room size is now by tile
+- Loading bin loads name into input
+- Clear canvas resets room size
+- Clear canvas and room size buttons look better
+- Room size now shows in input boxes, updates on import
+- When importing auto sets to all layer
+
+### Fixed
+- Losts gifts button doesnt reset anymore
+
+## [1.3.1]
+### Added
+- Title links to GitHub page
+
+### Changed
+- Lost gifts toggle more noticeable
 
 ### Fixed
 - Levels importing wrong, due to rounding

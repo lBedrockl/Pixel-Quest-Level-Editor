@@ -1,12 +1,9 @@
-one screen is 40 x 30
+- when holding alt you can drag around the canvas
+
+hmm - fix getting mouse coords, can select out of bounds stuff
 
 
-when holding alt you can drag around the canvas
-
-fix getting mouse coords, can select out of bounds stuff
-
-
-- box place removing always shows small box at box place start, weird
+x box place removing always shows small box at box place start, weird
 
 
 New Feature Ideas

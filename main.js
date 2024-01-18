@@ -18,8 +18,10 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.3.0';
+var editorVer = '1.3.2';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
+document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
+
 var currentSize = [2, 2];
 
 var selection = [0, 0];
@@ -253,7 +255,7 @@ function exportLevel(name) {
 async function importBin(event){
     clearCanvas()
     const file = event.target.files.item(0)
-    const bin = await file.text('utf8');
+    const bin = await file.text('utf8')
 
     let rows = bin.split('<Row>\n') //make rows
     let rowArray = []
@@ -336,7 +338,11 @@ async function importBin(event){
             }
         }
     }
-    setCanvasSize(Math.ceil((col[1].length - 1) / 20), Math.ceil(rows.length / 15), false)
+
+    document.getElementById("lvlName").value = col[0][0].text.slice(col[0][0].text.indexOf('<Level name=') + 13, col[0][0].text.length - 2)
+
+    setLayer(6)
+    setCanvasSize(col[1].length - 1, rows.length - 1, false)
     draw()
 }
 
@@ -457,19 +463,27 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
 function setCanvasSize(width, height, clear){ //in room size
     let w = parseInt(width)
     let h = parseInt(height)
-    canvas.width = 640 * (w / 2)
-    canvas.height = 480 * (h / 2)
+    canvas.width = 16 * w
+    canvas.height = 16 * h
 
     if(currentSize[0] > w || currentSize[1] > h) if(clear) clearCanvas()
 
     currentSize = [w, h]
     draw()
+    document.getElementById('roomX').value = w;
+    document.getElementById('roomY').value = h;
 }
 
 //Initialize app when tileset source is done loading
+var loaded = false
 tilesetImage.onload = function(){
-   setCanvasSize(2,2,true)
-   setLayer(1)
+    if(!loaded){
+        setCanvasSize(40,30,true)
+        setLayer(1)
+        loaded = true
+    }else{
+        draw()
+    }
 }
 volumeImage.src = "images/volumeSheet.png"
 objectImage.src = "images/objectSheet.png";
