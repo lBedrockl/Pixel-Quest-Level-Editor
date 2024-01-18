@@ -269,7 +269,7 @@ async function importBin(event){
             start: x.match('<Level') != null, //anti start stuff
             emp: x.match('/>') != null,
     
-            frin: x.match('<Fringe') != null, //tile sets
+            frin: x.match('<Fringe') != null,
             back: x.match('<Background') != null,
             ter: x.match('<Terrain') != null, 
             obj: x.match('<Objects') != null,
@@ -336,7 +336,7 @@ async function importBin(event){
             }
         }
     }
-    setCanvasSize(col[1].length / 20, rows.length / 15, false)
+    setCanvasSize(Math.ceil((col[1].length - 1) / 20), Math.ceil(rows.length / 15), false)
     draw()
 }
 

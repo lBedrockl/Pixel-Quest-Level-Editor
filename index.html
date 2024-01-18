@@ -16,10 +16,11 @@
 <body>
 <div class="card">
    <header>
-    <h1>Pixel Quest Editor<small class="text-muted"><sub id="editorVersion">version is updated in main.js</sub></small>
-        <input type="checkbox" class='hidden' onchange="lostGiftsToggle(this.checked)"></input>
+    <a href="https://github.com/lBedrockl/Pixel-Quest-Level-Editor" style="text-decoration: none; color: inherit;">
+        <h1>Pixel Quest Editor<small class="text-muted"><sub id="editorVersion">version is updated in main.js</sub></small>
         <ul class="layers">By Bedrock</ul>
-    </h1>
+        </h1>
+    </a>
         <div>
             <ul><button class="button-as-link" onclick="clearCanvas()">Clear Canvas</button></ul>
             <ul>
@@ -55,6 +56,9 @@
             <img class="image1" id="tileset-source" crossorigin />
             <div class="tileset-container_selection"></div>
          </div>
+         <p class="instructions">
+            <input type="checkbox" onchange="lostGiftsToggle(this.checked)"> Lost Gifts Style</input>
+        </p>
          <label>Hitboxes</label>
          <div class="volume-container">
             <img id="volume-source" crossorigin />

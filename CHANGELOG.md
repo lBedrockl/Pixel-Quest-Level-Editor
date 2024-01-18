@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1]
+### Added
+- Title links to github page
+
+### Changed
+- Lost gifts toggle more noticable
+
+### Fixed
+- Levels importing wrong, due to rounding
+
 ## [1.3.0]
 ### Added
 - Lost gifts toggle
