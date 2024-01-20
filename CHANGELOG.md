@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.0]
+### Added
+- Dynamic tilesets
+- New tileset dropdown
+
+### Changed
+- Interactable things more reactive
+
+### Removed
+- Losts gifts button
+
 ## [1.3.2]
 ### Added
 - Little info popup for room size

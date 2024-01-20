@@ -18,7 +18,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.3.2';
+var editorVer = '1.4.0';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -478,6 +478,7 @@ function setCanvasSize(width, height, clear){ //in room size
 var loaded = false
 tilesetImage.onload = function(){
     if(!loaded){
+        createHtmlElements()
         setCanvasSize(40,30,true)
         setLayer(1)
         loaded = true
@@ -485,9 +486,9 @@ tilesetImage.onload = function(){
         draw()
     }
 }
-volumeImage.src = "images/volumeSheet.png"
-objectImage.src = "images/objectSheet.png";
-tilesetImage.src = "images/tilesheet.png";
+volumeImage.src = `tilesets/${tilesetNames[0].folder}/volume.png`
+objectImage.src = `tilesets/${tilesetNames[0].folder}/object.png`
+tilesetImage.src = `tilesets/${tilesetNames[0].folder}/tile.png`
 
 function download(filename) {
     if(filename == '') filename = 'unnamed'
@@ -508,13 +509,17 @@ function volSwitch(checked){
     draw()
 }
 
-function lostGiftsToggle(checked){
-    if(checked){
-        tilesetImage.src = "images/losttilesheet.png";
-        objectImage.src = "images/lostobjectSheet.png";
-    }else{
-        tilesetImage.src = "images/tilesheet.png";
-        objectImage.src = "images/objectSheet.png";
+function switchTileset(picked){
+    tilesetImage.src = `tilesets/${tilesetNames[picked].folder}/tile.png`
+    objectImage.src = `tilesets/${tilesetNames[picked].folder}/object.png`
+    //if(tilesetNames[picked].volume) volumeImage.src = `tilesets/${tilesetNames[picked].folder}/volume.png`
+}
+
+function createHtmlElements(){
+    for(let i = 0; i < tilesetNames.length; i++){
+        let button = document.createElement('button')
+        button.textContent = tilesetNames[i].name
+        button.onclick = function () { switchTileset(i) }
+        document.getElementsByClassName('dropdown-content')[0].appendChild(button)
     }
-    draw()
 }

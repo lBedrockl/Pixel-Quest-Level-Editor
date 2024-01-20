@@ -1,5 +1,7 @@
 - when holding alt you can drag around the canvas
 
+- another box when hovering on side tilesets, 50% opac
+
 hmm - fix getting mouse coords, can select out of bounds stuff
 
 

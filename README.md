@@ -20,6 +20,12 @@
 
 - Room size is by tile, minimum 40 x 30, max 160 x 180
 
+### [Custom Tilesets]
+
+- Pick a tileset from the dropdown
+
+- I can add new custom ones to the Github along with a swf, just DM me a working swf and tileset
+
 ### [Tutorials]
 
 - How to use editor: tut here

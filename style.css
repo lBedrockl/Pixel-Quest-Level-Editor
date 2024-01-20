@@ -36,6 +36,9 @@ body {
   margin-bottom: 1em;
   padding: 16px;
 }
+
+.card header h1:hover {color: rgb(16, 113, 110);}
+
 .card header h1 {
   margin: 0;
 }
@@ -146,6 +149,8 @@ canvas {
   color: rgb(27, 190, 185);
 }
 
+.layers button:hover {font-weight: bold;color: rgb(27, 190, 185)}
+
 .buttons {
     padding-right: 10px;
 }
@@ -161,6 +166,8 @@ canvas {
   padding: 6px 16px;
   cursor: pointer;
 }
+
+.primary-button:hover {background-color: rgb(16, 113, 110);}
 
 label {
   text-transform: uppercase;
@@ -267,3 +274,38 @@ input[type=checkbox]:checked:after {
   }
   
   .hover-text:hover #fade { opacity: 1; }
+
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    padding-top: 10px;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content button {
+    border: 4px solid transparent;
+    background-color: black;
+    color: cyan;
+    padding: 4px 8px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content button:hover {background-color: #003637;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+
