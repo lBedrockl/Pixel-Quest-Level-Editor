@@ -4,17 +4,20 @@ var canvasSelection = document.querySelector(".canvas-container_selection");
 //volumes
 var volumeContainer = document.querySelector(".volume-container");
 var volumeSelection = document.querySelector(".volume-container_selection");
+var volumeSelection2 = document.querySelector(".volume-container_selection2");
 var volumeImage = document.querySelector("#volume-source");
 
 
 //tiles
 var tilesetContainer = document.querySelector(".tileset-container");
 var tilesetSelection = document.querySelector(".tileset-container_selection");
+var tilesetSelection2 = document.querySelector(".tileset-container_selection2");
 var tilesetImage = document.querySelector("#tileset-source");
 
 //3x3
 var objectContainer = document.querySelector(".object-container");
 var objectSelection = document.querySelector(".object-container_selection");
+var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
@@ -27,6 +30,8 @@ var currentSize = [2, 2];
 var selection = [0, 0];
 var selectionObj = [0, 0];
 var selectionVol = [0, 0];
+
+var selectionTile = [0, 0];
 
 var showVolumes = false;
 var placingBox = false;
@@ -60,6 +65,17 @@ tilesetContainer.addEventListener("mousedown", (event) => {
    tilesetSelection.style.top = selection[1] * 16 + "px";
 });
 
+tilesetContainer.addEventListener("mouseleave", () => {
+    tilesetSelection2.style.outline = '0px solid black'
+});
+
+tilesetContainer.addEventListener("mousemove", (event) => {
+    selectionTile = getCoords(event, 16);
+    tilesetSelection2.style.left = selectionTile[0] * 16 + "px";
+    tilesetSelection2.style.top = selectionTile[1] * 16 + "px";
+    tilesetSelection2.style.outline = '3px solid white'
+});
+
 //select volume
 volumeContainer.addEventListener("mousedown", (event) => {
     if(currentLayer != 5) setLayer(5)
@@ -68,12 +84,34 @@ volumeContainer.addEventListener("mousedown", (event) => {
     volumeSelection.style.top = selectionVol[1] * 16 + "px";
  });
 
+ volumeContainer.addEventListener("mouseleave", () => {
+    volumeSelection2.style.outline = '0px solid black'
+});
+
+volumeContainer.addEventListener("mousemove", (event) => {
+    selectionTile = getCoords(event, 16);
+    volumeSelection2.style.left = selectionTile[0] * 16 + "px";
+    volumeSelection2.style.top = selectionTile[1] * 16 + "px";
+    volumeSelection2.style.outline = '3px solid white'
+});
+
 //Select object from the objects grid
 objectContainer.addEventListener("mousedown", (event) => {
     if(currentLayer != 3) setLayer(3)
     selectionObj = getCoords(event, 48);
     objectSelection.style.left = selectionObj[0] * 48 + "px";
     objectSelection.style.top = selectionObj[1] * 48 + "px";
+});
+
+objectContainer.addEventListener("mouseleave", () => {
+    objectSelection2.style.outline = '0px solid black'
+});
+
+objectContainer.addEventListener("mousemove", (event) => {
+    selectionTile = getCoords(event, 48);
+    objectSelection2.style.left = selectionTile[0] * 48 + "px";
+    objectSelection2.style.top = selectionTile[1] * 48 + "px";
+    objectSelection2.style.outline = '3px solid white'
 });
 
 var boxPlace = false
@@ -193,11 +231,14 @@ function updateHover(e){
 }
 
 //Utility for getting coordinates of mouse click
-function getCoords(e, px) { //smth is wrong with this
-   const { x, y } = e.target.getBoundingClientRect();
-   const mouseX = e.clientX - x;
-   const mouseY = e.clientY - y;
-   return [Math.floor(mouseX / px), Math.floor(mouseY / px)];
+function getCoords(e, px) {
+    const { x, y } = e.target.getBoundingClientRect()
+    const mouseX = Math.abs(e.clientX - x)
+    const mouseY = Math.abs(e.clientY - y)
+    return [
+        Math.min(Math.floor(mouseX / px), e.target.width),
+        Math.min(Math.floor(mouseY / px), e.target.height)
+    ]
 }
 
 //converts data to image:data string and pipes into new browser tab

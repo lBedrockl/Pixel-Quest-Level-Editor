@@ -91,6 +91,18 @@ canvas {
     width: 16px;
     height: 16px;
     pointer-events:none;
+    z-index: 1;
+}
+
+.volume-container_selection2 {
+    position: absolute;
+    outline: 3px solid white;
+    mix-blend-mode: difference;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    pointer-events:none;
 }
 
 .object-container_selection {
@@ -101,7 +113,19 @@ canvas {
   width: 48px;
   height: 48px;
   pointer-events:none;
+  z-index: 1;
 }
+
+.object-container_selection2 {
+    position: absolute;
+    outline: 3px solid white;
+    mix-blend-mode: difference;
+    left: 0;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    pointer-events:none;
+  }
 
 .tileset-container_selection {
   position: absolute;
@@ -111,7 +135,19 @@ canvas {
   width: 16px;
   height: 16px;
   pointer-events:none;
+  z-index: 1;
 }
+
+.tileset-container_selection2 {
+    position: absolute;
+    outline: 3px solid white;
+    mix-blend-mode: difference;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    pointer-events:none;
+  }
 
 .canvas-container_selection {
     position: absolute;
