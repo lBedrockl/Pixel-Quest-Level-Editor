@@ -18,7 +18,7 @@ var objectSelection = document.querySelector(".object-container_selection");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.0';
+var editorVer = '1.4.1';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -472,6 +472,8 @@ function setCanvasSize(width, height, clear){ //in room size
     draw()
     document.getElementById('roomX').value = w;
     document.getElementById('roomY').value = h;
+
+    document.getElementById("html").style.width = `${Math.max(w*0.95,100)}%` // this is dumb but it works lol
 }
 
 //Initialize app when tileset source is done loading
@@ -510,9 +512,17 @@ function volSwitch(checked){
 }
 
 function switchTileset(picked){
-    tilesetImage.src = `tilesets/${tilesetNames[picked].folder}/tile.png`
-    objectImage.src = `tilesets/${tilesetNames[picked].folder}/object.png`
-    //if(tilesetNames[picked].volume) volumeImage.src = `tilesets/${tilesetNames[picked].folder}/volume.png`
+    if(!tilesetNames[picked].tile){
+        tilesetImage.src = `tilesets/${tilesetNames[0].folder}/tile.png`
+    }else{tilesetImage.src = `tilesets/${tilesetNames[picked].folder}/tile.png`}
+    
+    if(!tilesetNames[picked].object){
+        objectImage.src = `tilesets/${tilesetNames[0].folder}/object.png`
+    }else{objectImage.src = `tilesets/${tilesetNames[picked].folder}/object.png`}
+
+    if(!tilesetNames[picked].volume){
+        volumeImage.src = `tilesets/${tilesetNames[0].folder}/volume.png`
+    }else{volumeImage.src = `tilesets/${tilesetNames[picked].folder}/volume.png`}
 }
 
 function createHtmlElements(){

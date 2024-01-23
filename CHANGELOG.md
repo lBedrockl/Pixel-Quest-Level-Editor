@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.1]
+### Fixed
+- You can now scroll all the way to the side when the width is maxed at 100% zoom
+- More robust tileset switcher
+
 ## [1.4.0]
 ### Added
 - Dynamic tilesets
