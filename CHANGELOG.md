@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.2]
+### Added
+- Custom colors per tileset, This was a pain to make
+
 ## [1.4.1]
 ### Added
 - New hover visual for tile picker
@@ -11,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - You can now scroll all the way to the side when the width is maxed at 100% zoom
 - More robust tileset switcher
-- The tile picker shouldnt be outside the box anymore
+- The tile picker shouldn't be outside the box anymore
 
 ## [1.4.0]
 ### Added

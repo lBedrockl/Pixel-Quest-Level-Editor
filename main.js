@@ -21,7 +21,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.1';
+var editorVer = '1.4.2';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -32,6 +32,7 @@ var selectionObj = [0, 0];
 var selectionVol = [0, 0];
 
 var selectionTile = [0, 0];
+var selectionColor = 'cyan';
 
 var showVolumes = false;
 var placingBox = false;
@@ -214,7 +215,7 @@ function updateHover(e){
     if(isMouseOn){
         if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
         else if(boxPlace) canvasSelection.style.outline = '3px solid lime'
-        else canvasSelection.style.outline = '3px solid cyan'
+        else canvasSelection.style.outline = `3px solid ${selectionColor}`
         var coords = getCoords(e, 16)
         if(boxPlace){
             canvasSelection.style.width = (Math.abs(boxStart[0] - coords[0]) + 1) * 16 + 'px'
@@ -524,6 +525,7 @@ tilesetImage.onload = function(){
         createHtmlElements()
         setCanvasSize(40,30,true)
         setLayer(1)
+        changeColors()
         loaded = true
     }else{
         draw()
@@ -564,6 +566,16 @@ function switchTileset(picked){
     if(!tilesetNames[picked].volume){
         volumeImage.src = `tilesets/${tilesetNames[0].folder}/volume.png`
     }else{volumeImage.src = `tilesets/${tilesetNames[picked].folder}/volume.png`}
+
+    if(!(tilesetNames[picked].color == undefined)){ // idk why but it needs () or it breaks lol
+        selectionColor = tilesetNames[picked].color
+    }else{selectionColor = tilesetNames[0].color}
+
+    tilesetSelection.style.outline = `3px solid ${selectionColor}`
+    objectSelection.style.outline = `3px solid ${selectionColor}`
+    volumeSelection.style.outline = `3px solid ${selectionColor}`
+
+    changeColors()
 }
 
 function createHtmlElements(){
@@ -573,4 +585,97 @@ function createHtmlElements(){
         button.onclick = function () { switchTileset(i) }
         document.getElementsByClassName('dropdown-content')[0].appendChild(button)
     }
+}
+
+function changeColors(){
+    var mainColor = colorToRGBA(selectionColor)
+    var midColor = [Math.floor(mainColor[0]/1.25),Math.floor(mainColor[1]/1.25),Math.floor(mainColor[2]/1.25),mainColor[3]]
+    var darkerColor = [Math.floor(mainColor[0]/2),Math.floor(mainColor[1]/2),Math.floor(mainColor[2]/2),mainColor[3]]
+
+    document.querySelector('body').style.color = rgbaToText(mainColor)
+    document.querySelector('.image1').style.backgroundColor = rgbaToText(midColor)
+    document.querySelector('.tooltip-text').style.backgroundColor = rgbaToText(darkerColor)
+    document.querySelector('.hover-text').style.background = rgbaToText(darkerColor)
+
+    let title = document.querySelector('.card').querySelector('header').querySelector('h1')
+    title.style.color = rgbaToText(mainColor)
+    title.onmouseover = function() {this.style.color = rgbaToText(darkerColor)}
+    title.onmouseleave = function() {this.style.color = rgbaToText(mainColor)}
+
+    document.querySelectorAll('input').forEach((elem) => {
+        if(elem.type == 'checkbox'){
+            elem.addEventListener('change', function() {
+                //console.log(document.styleSheets[2].cssRules)  // THIS CAN SUCK MY NUTS 
+                // make this dynamic at some point since changing css will break 
+                //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                document.styleSheets[2].cssRules[37].style.borderColor = rgbaToText(mainColor)
+            }) 
+            document.styleSheets[2].cssRules[37].style.borderColor = rgbaToText(mainColor)
+        }
+    })
+
+    document.querySelectorAll('.layers').forEach((elem) => { //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        elem.querySelectorAll('li').forEach((elem2) => {
+            var elem3 = elem2.querySelector('button')
+
+            if(elem3.className == 'layer active'){ //updates on tileset change
+                elem3.style.color = rgbaToText(mainColor)
+                elem3.style.background = `linear-gradient(90deg, ${rgbaToText(darkerColor)}-100%, rgb(0, 0, 0) 100%)`
+            }else{
+                elem3.style.color = 'white'
+                elem3.style.background = ''
+            }
+
+            elem3.onmouseover = function() {this.style.color = rgbaToText(mainColor)}
+            elem3.onmouseleave = function() {this.style.color = this.className == 'layer active' ? rgbaToText(mainColor) : 'white'}
+
+            elem3.addEventListener('click', function() { //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa // updates when click
+                this.style.color = rgbaToText(mainColor)
+                this.style.background = `linear-gradient(90deg, ${rgbaToText(darkerColor)}-100%, rgb(0, 0, 0) 100%)`
+                
+                document.querySelectorAll('.layers').forEach((elem) => { 
+                    elem.querySelectorAll('li').forEach((elem2) => {
+                        var elem3 = elem2.querySelector('button')
+                        if(elem3.className == 'layer'){
+                            elem3.style.color = 'white'
+                            elem3.style.background = ''
+                        }
+                    })
+                })
+            })
+        })
+    })
+    
+    document.querySelector('.dropdown-content').querySelectorAll('button').forEach((elem) => {
+        elem.style.color = rgbaToText(mainColor)
+        elem.onmouseover = function() {this.style.backgroundColor = rgbaToText(darkerColor)}
+        elem.onmouseleave = function() {this.style.backgroundColor = 'rgba(0,0,0,0)'}
+        elem.onmousedown = function() {this.style.backgroundColor = 'rgba(0,0,0,0)'}
+    })
+    
+    document.querySelectorAll('.primary-button').forEach((elem) => {
+        elem.style.backgroundColor = rgbaToText(midColor)
+        elem.style.borderBottomColor = rgbaToText(darkerColor)
+
+        elem.onmouseover = function() {this.style.backgroundColor = rgbaToText(darkerColor)}
+        elem.onmouseleave = function() {this.style.backgroundColor = rgbaToText(midColor)}
+    })
+
+}
+
+function colorToRGBA(color) { //yoink
+    var cvs, ctx;
+    cvs = document.createElement('canvas');
+    cvs.height = 1;
+    cvs.width = 1;
+    ctx = cvs.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1, 1);
+    return ctx.getImageData(0, 0, 1, 1).data;
+}
+
+function rgbaToText(rgba){
+    return `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${rgba[3]})`
 }

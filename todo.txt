@@ -1,5 +1,13 @@
 - when holding alt you can drag around the canvas
 
+- Add tileset based selection box color option, and tileset bg
+orange for lost gifts, cant be green or red
+
+try adding a 0.1 opac fill to canvas box place, uses custom color
+
+
+
+IDK
 
 x box place removing always shows small box at box place start, weird
 

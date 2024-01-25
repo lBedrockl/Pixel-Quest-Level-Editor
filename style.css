@@ -13,7 +13,7 @@ body {
   background: black;
   display: flex;
   justify-content: space-around;
-  color: rgb(27, 190, 185);
+  color: cyan;
 }
 
 .instructions {
@@ -38,7 +38,7 @@ body {
   padding: 16px;
 }
 
-.card header h1:hover {color: rgb(16, 113, 110);}
+.card header h1:hover {color: darkcyan}
 
 .card header h1 {
   margin: 0;
@@ -182,11 +182,11 @@ canvas {
 
 .layers button.active {
     background: linear-gradient(90deg, rgb(0, 55, 56)0%, rgb(0, 0, 0) 100%);
-  font-weight: bold;
-  color: rgb(27, 190, 185);
+    font-weight: bold;
+    color: cyan;
 }
 
-.layers button:hover {font-weight: bold;color: rgb(27, 190, 185)}
+.layers button:hover {font-weight: bold;color: cyan}
 
 .buttons {
     padding-right: 10px;
@@ -196,7 +196,7 @@ canvas {
   border: 0;
   background: rgb(27, 190, 185);
   border-top: 4px solid transparent;
-  border-bottom: 4px solid rgb(16, 113, 110);
+  border-bottom: 4px solid darkcyan;
   color: #fff;
   border-radius: 6px;
   outline: 0;
@@ -204,7 +204,9 @@ canvas {
   cursor: pointer;
 }
 
-.primary-button:hover {background-color: rgb(16, 113, 110);}
+.primary-button:hover {
+    background-color: darkcyan;
+}
 
 label {
   text-transform: uppercase;
@@ -236,7 +238,7 @@ textarea {
     position: relative;
     top: 0;
     left: 0;
-    background-color: rgb(0, 255, 255, 0.6);
+    background-color: rgb(0, 204, 204, 1);
 }
 
 
@@ -263,7 +265,7 @@ input[type=checkbox]:checked:after {
     display: block;
     width: 5px;
     height: 10px;
-    border: solid rgb(0, 255, 255, 1);
+    border: solid cyan;
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -280,7 +282,7 @@ input[type=checkbox]:checked:after {
     width: 150px;
     color: white;
     font-size: 12px;
-    background-color: rgb(16, 113, 110);
+    background-color: darkcyan;
     border-radius: 10px;
     padding: 5px 10px 5px 10px;
 
@@ -297,7 +299,7 @@ input[type=checkbox]:checked:after {
     display: inline-block;
     font-family: Arial;
     text-align: center;
-    background: rgb(16, 113, 110);
+    background: darkcyan;
     padding: 5px 12px;
     margin: 5px;
     font-size: 15px;
@@ -341,7 +343,7 @@ input[type=checkbox]:checked:after {
   }
   
   /* Change color of dropdown links on hover */
-  .dropdown-content button:hover {background-color: #003637;}
+  .dropdown-content button:hover {background-color: rgb(0, 55, 55)}
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {display: block;}
