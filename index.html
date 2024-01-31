@@ -85,23 +85,27 @@
       </aside>
       <div class="card_right-column">
          <!-- The main canvas -->
+         <div id="canvasBG" crossorigin></div>
          <canvas id="canvas" width="0" height="0"></canvas>
+         
+         
          <div class="canvas-container_selection"></div>
          
          <p class="instructions">
-            <strong>Click</strong> to paint.
+            <strong>Click</strong> to place.
             <strong>Shift+Click</strong> to remove. 
          </p>
          <p class="instructions">
             Box Place:
             <strong>Crtl+Click</strong> to set start.
-            <strong>Click</strong> to place. 
-            <strong>Shift+Click</strong> to remove. 
+            <strong>Click</strong> to place
+            or <strong>Shift+Click</strong> to remove. 
          </p>
          <!-- UI for layers -->
          <div>
-            <p class="instructions">
-            <input type="checkbox" onchange="volSwitch(this.checked)"> Show volumes on all layers</input>
+            <p class="instructions" id="checkboxes">
+                <input class="insCheck" type="checkbox" onchange="volSwitch(this.checked)"> Show volumes on all layers</input>
+                <input class="insCheck" type="checkbox" onchange="changeBG(this.checked)"> Use in-game BG</input>
             </p>
             <label>Editing Layer:</label>
             <ul class="layers">
@@ -117,6 +121,6 @@
       </div>
    </div>
 </div>
-<script type='text/javascript' src="./tilesets/tilesets.js?v=1.1"></script> <!-- Update version number only when modifying tileset.js -->
-<script src="./main.js?v=1.4.2"></script>
+<script type='text/javascript' src="./tilesets/tilesets.js?v=1.2"></script> <!-- Update version number only when modifying tileset.js -->
+<script src="./main.js?v=1.4.3"></script>
 </html>

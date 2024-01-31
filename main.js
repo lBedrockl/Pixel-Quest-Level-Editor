@@ -1,4 +1,4 @@
-var canvas = document.querySelector("canvas");
+var canvas = document.querySelector("#canvas");
 var canvasSelection = document.querySelector(".canvas-container_selection");
 
 //volumes
@@ -21,7 +21,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.2';
+var editorVer = '1.4.3';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -33,6 +33,8 @@ var selectionVol = [0, 0];
 
 var selectionTile = [0, 0];
 var selectionColor = 'cyan';
+var currentTileset = 0;
+var useIngameBG = false;
 
 var showVolumes = false;
 var placingBox = false;
@@ -59,18 +61,18 @@ var layers = [
 ];
 
 //Select tile from the Tiles grid
-tilesetContainer.addEventListener("mousedown", (event) => {
+tilesetImage.addEventListener("mousedown", (event) => {
    if(currentLayer == 3 || currentLayer == 5) setLayer(1)
    selection = getCoords(event, 16);
    tilesetSelection.style.left = selection[0] * 16 + "px";
    tilesetSelection.style.top = selection[1] * 16 + "px";
 });
 
-tilesetContainer.addEventListener("mouseleave", () => {
+tilesetImage.addEventListener("mouseleave", () => {
     tilesetSelection2.style.outline = '0px solid black'
 });
 
-tilesetContainer.addEventListener("mousemove", (event) => {
+tilesetImage.addEventListener("mousemove", (event) => {
     selectionTile = getCoords(event, 16);
     tilesetSelection2.style.left = selectionTile[0] * 16 + "px";
     tilesetSelection2.style.top = selectionTile[1] * 16 + "px";
@@ -78,18 +80,18 @@ tilesetContainer.addEventListener("mousemove", (event) => {
 });
 
 //select volume
-volumeContainer.addEventListener("mousedown", (event) => {
+volumeImage.addEventListener("mousedown", (event) => {
     if(currentLayer != 5) setLayer(5)
     selectionVol = getCoords(event, 16);
     volumeSelection.style.left = selectionVol[0] * 16 + "px";
     volumeSelection.style.top = selectionVol[1] * 16 + "px";
  });
 
- volumeContainer.addEventListener("mouseleave", () => {
+ volumeImage.addEventListener("mouseleave", () => {
     volumeSelection2.style.outline = '0px solid black'
 });
 
-volumeContainer.addEventListener("mousemove", (event) => {
+volumeImage.addEventListener("mousemove", (event) => {
     selectionTile = getCoords(event, 16);
     volumeSelection2.style.left = selectionTile[0] * 16 + "px";
     volumeSelection2.style.top = selectionTile[1] * 16 + "px";
@@ -97,18 +99,18 @@ volumeContainer.addEventListener("mousemove", (event) => {
 });
 
 //Select object from the objects grid
-objectContainer.addEventListener("mousedown", (event) => {
+objectImage.addEventListener("mousedown", (event) => {
     if(currentLayer != 3) setLayer(3)
     selectionObj = getCoords(event, 48);
     objectSelection.style.left = selectionObj[0] * 48 + "px";
     objectSelection.style.top = selectionObj[1] * 48 + "px";
 });
 
-objectContainer.addEventListener("mouseleave", () => {
+objectImage.addEventListener("mouseleave", () => {
     objectSelection2.style.outline = '0px solid black'
 });
 
-objectContainer.addEventListener("mousemove", (event) => {
+objectImage.addEventListener("mousemove", (event) => {
     selectionTile = getCoords(event, 48);
     objectSelection2.style.left = selectionTile[0] * 48 + "px";
     objectSelection2.style.top = selectionTile[1] * 48 + "px";
@@ -233,12 +235,12 @@ function updateHover(e){
 
 //Utility for getting coordinates of mouse click
 function getCoords(e, px) {
-    const { x, y } = e.target.getBoundingClientRect()
+    const { x , y , width , height } = e.target.getBoundingClientRect()
     const mouseX = Math.abs(e.clientX - x)
     const mouseY = Math.abs(e.clientY - y)
     return [
-        Math.min(Math.floor(mouseX / px), e.target.width),
-        Math.min(Math.floor(mouseY / px), e.target.height)
+        Math.min(Math.floor(mouseX / px), width),
+        Math.min(Math.floor(mouseY / px), height)
     ]
 }
 
@@ -411,15 +413,15 @@ function draw() {
    var ctx = canvas.getContext("2d");
    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-   ctx.globalAlpha = 0.1
-   ctx.fillStyle = "black";
-   let mod = 0
-   for(var x = 0;x < canvas.width; x+= 16){
-       for(var y = 0;y < canvas.height; y+= 16){
-           if(((y/16) + mod) % 2 == 0) ctx.fillRect(x, y, 16, 16)
-       } 
-       mod++
-   }
+//    ctx.globalAlpha = 0.1
+//    ctx.fillStyle = "black";
+//    let mod = 0
+//    for(var x = 0;x < canvas.width; x+= 16){
+//        for(var y = 0;y < canvas.height; y+= 16){
+//            if(((y/16) + mod) % 2 == 0) ctx.fillRect(x, y, 16, 16)
+//        } 
+//        mod++
+//    }
 
    var size_of_crop = 16;
    var curLayer = 0
@@ -507,6 +509,8 @@ function setCanvasSize(width, height, clear){ //in room size
     let h = parseInt(height)
     canvas.width = 16 * w
     canvas.height = 16 * h
+    document.getElementById('canvasBG').style.width = 16 * w + 'px'
+    document.getElementById('canvasBG').style.height = 16 * h + 'px'
 
     if(currentSize[0] > w || currentSize[1] > h) if(clear) clearCanvas()
 
@@ -554,7 +558,26 @@ function volSwitch(checked){
     draw()
 }
 
+function changeBG(checked){
+    useIngameBG = checked
+    let canvasBG = document.getElementById('canvasBG')
+    if(useIngameBG){
+        canvasBG.style.backgroundImage = `url('tilesets/${tilesetNames[currentTileset].folder}/background.png')`
+        if(!(tilesetNames[currentTileset].bgColor == undefined)){
+            canvasBG.style.backgroundColor = tilesetNames[currentTileset].bgColor
+        }else{
+            canvasBG.style.backgroundColor = 'transparent'
+        }
+        canvasBG.style.backgroundRepeat = 'repeat-x'
+    }else{
+        canvasBG.style.backgroundImage = `url('tilesets/default/defaultBG.png')`
+        canvasBG.style.backgroundColor = 'transparent'
+        canvasBG.style.backgroundRepeat = 'repeat'
+    }
+}
+
 function switchTileset(picked){
+    currentTileset = picked
     if(!tilesetNames[picked].tile){
         tilesetImage.src = `tilesets/${tilesetNames[0].folder}/tile.png`
     }else{tilesetImage.src = `tilesets/${tilesetNames[picked].folder}/tile.png`}
@@ -576,6 +599,7 @@ function switchTileset(picked){
     volumeSelection.style.outline = `3px solid ${selectionColor}`
 
     changeColors()
+    changeBG(useIngameBG)
 }
 
 function createHtmlElements(){
@@ -587,12 +611,13 @@ function createHtmlElements(){
     }
 }
 
-function changeColors(){
+function changeColors(){ //if I add new css do it at bottom, it will break this currently
     var mainColor = colorToRGBA(selectionColor)
     var midColor = [Math.floor(mainColor[0]/1.25),Math.floor(mainColor[1]/1.25),Math.floor(mainColor[2]/1.25),mainColor[3]]
     var darkerColor = [Math.floor(mainColor[0]/2),Math.floor(mainColor[1]/2),Math.floor(mainColor[2]/2),mainColor[3]]
 
     document.querySelector('body').style.color = rgbaToText(mainColor)
+    document.querySelector('#canvas').style.outlineColor = rgbaToText(mainColor)
     document.querySelector('.image1').style.backgroundColor = rgbaToText(midColor)
     document.querySelector('.tooltip-text').style.backgroundColor = rgbaToText(darkerColor)
     document.querySelector('.hover-text').style.background = rgbaToText(darkerColor)
@@ -601,22 +626,22 @@ function changeColors(){
     title.style.color = rgbaToText(mainColor)
     title.onmouseover = function() {this.style.color = rgbaToText(darkerColor)}
     title.onmouseleave = function() {this.style.color = rgbaToText(mainColor)}
-
-    document.querySelectorAll('input').forEach((elem) => {
-        if(elem.type == 'checkbox'){
-            elem.addEventListener('change', function() {
-                //console.log(document.styleSheets[2].cssRules)  // THIS CAN SUCK MY NUTS 
-                // make this dynamic at some point since changing css will break 
-                //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                document.styleSheets[2].cssRules[37].style.borderColor = rgbaToText(mainColor)
-            }) 
-            document.styleSheets[2].cssRules[37].style.borderColor = rgbaToText(mainColor)
+    
+    for (const [key, value] of Object.entries(document.styleSheets[2].cssRules)) { // probs a better way to change styles idk
+        //console.log(`${key}: ${value.selectorText}`); // finds rule number for css stuff
+        if(value.selectorText == 'input[type=\"checkbox\"]:checked::after'){
+            document.querySelectorAll('input').forEach((elem) => {
+                if(elem.type == 'checkbox'){
+                    elem.addEventListener('change', function() {
+                        document.styleSheets[2].cssRules[key].style.borderColor = rgbaToText(mainColor)
+                    }) 
+                    document.styleSheets[2].cssRules[key].style.borderColor = rgbaToText(mainColor)
+                }
+            })
         }
-    })
+    }
 
-    document.querySelectorAll('.layers').forEach((elem) => { //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    document.querySelectorAll('.layers').forEach((elem) => {
         elem.querySelectorAll('li').forEach((elem2) => {
             var elem3 = elem2.querySelector('button')
 
@@ -630,21 +655,27 @@ function changeColors(){
 
             elem3.onmouseover = function() {this.style.color = rgbaToText(mainColor)}
             elem3.onmouseleave = function() {this.style.color = this.className == 'layer active' ? rgbaToText(mainColor) : 'white'}
+            
+            objectImage.addEventListener('click', function() {updateLayerColor()})
+            volumeImage.addEventListener('click', function() {updateLayerColor()})
+            tilesetImage.addEventListener('click', function() {updateLayerColor()})
 
-            elem3.addEventListener('click', function() { //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa // updates when click
-                this.style.color = rgbaToText(mainColor)
-                this.style.background = `linear-gradient(90deg, ${rgbaToText(darkerColor)}-100%, rgb(0, 0, 0) 100%)`
-                
+            elem3.addEventListener('click', function() {updateLayerColor()})
+
+            function updateLayerColor(){
                 document.querySelectorAll('.layers').forEach((elem) => { 
                     elem.querySelectorAll('li').forEach((elem2) => {
                         var elem3 = elem2.querySelector('button')
                         if(elem3.className == 'layer'){
                             elem3.style.color = 'white'
                             elem3.style.background = ''
+                        }else{
+                            elem3.style.color = rgbaToText(mainColor)
+                            elem3.style.background = `linear-gradient(90deg, ${rgbaToText(darkerColor)}-100%, rgb(0, 0, 0) 100%)`
                         }
                     })
                 })
-            })
+            }
         })
     })
     

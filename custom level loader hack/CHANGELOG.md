@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.1] Bedrock update
+## Changed
+- Fixed art mistake in one of the bg layers
+
 ## [2.0.0]
 ## Changed
 - MAJOR Consistent dashes that last exactly 7 frames

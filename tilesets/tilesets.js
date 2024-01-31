@@ -3,14 +3,17 @@
         {
             folder: "default",
             name: 'Original',
-            color: 'cyan'
+            color: 'cyan',
+            bgColor: '#939EEB'
         }
         ,{
-            folder: "lostgift",
+            folder: "lostgifts",
             name: 'Lost Gifts',
             color: 'orange',
             tile: true,
-            object: true
+            object: true,
+            background: true,
+            bgColor: '#B3B6CA'
         }
         /*,{
             folder: "new folder",
@@ -24,6 +27,7 @@
         //  "SHOWN NAME",
         //  "color in hex or any css valid color" DONT USE RED OR LIME
         //  add which sheet the custom tileset uses]
+        //  bgColor is which color is shown above the bg since its limited
 
 
 
@@ -33,7 +37,9 @@
         //     color: '#ffffff or white',
         //     tile: false,
         //     object: true,
-        //     volume: true
-        // } // will be used for custom objects and volumes
+        //     volume: true, //not implemented will be used for custom objects and volumes
+        //     background: true,
+        //     bgColor: '#939EEB'
+        // }
     ]
 }

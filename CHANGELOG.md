@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.3]
+### Added
+- Outline to canvas
+- Option to use ingame bg, changeable in tilesets
+
+### Changed
+- Background of canvas is now an image, improving performance
+- Help text makes a tiny bit more sense
+
+### Fixed
+- When changing to layer via clicking containers the layer colors update correctly
+- script fix for color of checkmark, its dynamic now, thank god
+- Clicking off of selection containers is fully fixed, event listeners were on wrong thing oops
+
 ## [1.4.2]
 ### Added
 - Custom colors per tileset, This was a pain to make
