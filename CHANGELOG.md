@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+### Changed
+- Level name max length increased from 36 to 53 chars
+
 ## [1.4.3]
 ### Added
 - Outline to canvas
