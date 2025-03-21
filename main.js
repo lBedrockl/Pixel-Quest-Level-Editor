@@ -21,7 +21,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.3';
+var editorVer = '1.4.5';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -60,7 +60,7 @@ var layers = [
    {}
 ];
 
-//Select tile from the Tiles grid
+//MARK: Listeners
 tilesetImage.addEventListener("mousedown", (event) => {
    if(currentLayer == 3 || currentLayer == 5) setLayer(1)
    selection = getCoords(event, 16);
@@ -301,7 +301,13 @@ async function importBin(event){
     const file = event.target.files.item(0)
     const bin = await file.text('utf8')
 
-    let rows = bin.split('<Row>\n') //make rows
+    let rows //make rows
+    if(bin.includes('\r\n')){
+        rows = bin.split('<Row>\r\n')
+    }else{
+        rows = bin.split('<Row>\n')
+    }
+
     let rowArray = []
     for(let x of rows){
         rowArray.push(x.slice(0,x.indexOf('</Row>') - 4))

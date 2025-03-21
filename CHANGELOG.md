@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.5]
+### Added
+- Custom Tileset stuff wip
+
+### Fixed
+- CRLF bin files now work
+
+## [1.4.4]
+### Fixed
+- Favicon was missing, moved to tileset folder
+
 ## [1.4.3]
 ### Added
 - Outline to canvas

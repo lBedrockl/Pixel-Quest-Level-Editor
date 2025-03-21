@@ -6,17 +6,7 @@ sometimes checkbox can be checked but volumes dont show????????????? *very rare*
 
 
 
-bg image to canvas
-
-toggle between default bg tile and ingame bg and tileset changeable
-
-
-
-
 fix when clicking on object container colors dont update
-
-
-
 
 
 

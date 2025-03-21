@@ -14,6 +14,13 @@
             object: true,
             background: true,
             bgColor: '#B3B6CA'
+        },{
+            folder: "cyber",
+            name: 'Cyber',
+            color: 'orange',
+            tile: true,
+            object: true,
+            bgColor: '#B3B6CA'
         }
         /*,{
             folder: "new folder",
