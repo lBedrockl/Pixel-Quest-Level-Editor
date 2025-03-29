@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.7]
+### Fixed
+- Importing now changes tileset, I forgot to add that with the saving of it
+- Clearing the canvas now changes the tileset back to Original
+
 ## [1.4.6]
 ### Added
 - Bin files now store which tileset you exported with

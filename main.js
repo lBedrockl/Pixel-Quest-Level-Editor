@@ -385,17 +385,27 @@ async function importBin(event){
     }
 
     document.getElementById("lvlName").value = col[0][0].text.slice(col[0][0].text.indexOf('<Level name=') + 13, col[0][0].text.length -2)
-    //old files dont have
+
     if(col[0][0].text.indexOf('author=')){
         document.getElementById("authName").value = col[0][0].text.slice(col[0][0].text.indexOf('author=') + 8, col[0][0].text.indexOf('<Level name=') -4)
     }else{
         document.getElementById("authName").value = "Undefined"
     }
     
+    if(col[0][0].text.indexOf('tileset=')){
+        for(let i = 0; i < tilesetNames.length; i++){
+            if(tilesetNames[i].folder == col[0][0].text.slice(col[0][0].text.indexOf('tileset=') + 9, col[0][0].text.indexOf('author="') -2)){
+                switchTileset(i)
+            }
+        }
+    }else{
+        switchTileset(0)
+    }
 
     setLayer(6)
     setCanvasSize(col[1].length - 1, rows.length - 1, false)
     draw()
+
 }
 
 //Reset state to empty
@@ -404,6 +414,7 @@ function clearCanvas() {
    draw();
    document.getElementById("lvlName").value = ""
    document.getElementById("authName").value = ""
+   switchTileset(0)
 }
 
 function setLayer(newLayer) {
