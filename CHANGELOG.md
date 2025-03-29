@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.6]
+### Added
+- Bin files now store which tileset you exported with
+- You can now add an author name to the level
+
+### Fixed
+- The level name is now required to download, silly mistake I made
+
+## [1.4.51]
+### Fixed
+- Bug where importing cut off the sides and level name
 
 ## [1.4.5]
 ### Added

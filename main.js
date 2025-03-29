@@ -21,7 +21,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.5';
+var editorVer = '1.4.6';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -245,7 +245,7 @@ function getCoords(e, px) {
 }
 
 //converts data to image:data string and pipes into new browser tab
-function exportLevel(name) {
+function exportLevel(name, authorName) {
 	let output = ''
     for(let y = 0; y < canvas.height / 16; y++){
         output += '<Row>\n'
@@ -288,7 +288,7 @@ function exportLevel(name) {
     }
 
     let start = `<root>
-<LevelData editorVersion="${editorVer}" uuid="${self.crypto.randomUUID()}"/>
+<LevelData editorVersion="${editorVer}" uuid="${self.crypto.randomUUID()}" tileset="${tilesetNames[currentTileset].folder}" author="${document.getElementById("authName").value}"/>
 <Level name="${name}">`
 
 	let end = `</Level>\n</root>`
@@ -301,18 +301,13 @@ async function importBin(event){
     const file = event.target.files.item(0)
     const bin = await file.text('utf8')
 
-    let rows //make rows
-    if(bin.includes('\r\n')){
-        rows = bin.split('<Row>\r\n')
-    }else{
-        rows = bin.split('<Row>\n')
-    }
+    let newbin = bin.replace(/(\r\n|\n|\r)/gm, '\n')
+    let rows = newbin.split('<Row>\n')
 
     let rowArray = []
     for(let x of rows){
-        rowArray.push(x.slice(0,x.indexOf('</Row>') - 4))
+        rowArray.push(x.slice(0,x.indexOf('</Row>')))
     }
-    
     let col = []
     let i = 0
     for(let row of rowArray){
@@ -389,7 +384,14 @@ async function importBin(event){
         }
     }
 
-    document.getElementById("lvlName").value = col[0][0].text.slice(col[0][0].text.indexOf('<Level name=') + 13, col[0][0].text.length - 2)
+    document.getElementById("lvlName").value = col[0][0].text.slice(col[0][0].text.indexOf('<Level name=') + 13, col[0][0].text.length -2)
+    //old files dont have
+    if(col[0][0].text.indexOf('author=')){
+        document.getElementById("authName").value = col[0][0].text.slice(col[0][0].text.indexOf('author=') + 8, col[0][0].text.indexOf('<Level name=') -4)
+    }else{
+        document.getElementById("authName").value = "Undefined"
+    }
+    
 
     setLayer(6)
     setCanvasSize(col[1].length - 1, rows.length - 1, false)
@@ -400,6 +402,8 @@ async function importBin(event){
 function clearCanvas() {
    layers = [{}, {}, {}, {}, {}, {}];
    draw();
+   document.getElementById("lvlName").value = ""
+   document.getElementById("authName").value = ""
 }
 
 function setLayer(newLayer) {
