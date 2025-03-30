@@ -21,7 +21,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.7';
+var editorVer = '1.4.8';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -245,7 +245,7 @@ function getCoords(e, px) {
 }
 
 //converts data to image:data string and pipes into new browser tab
-function exportLevel(name, authorName) {
+function exportLevel(name) {
 	let output = ''
     for(let y = 0; y < canvas.height / 16; y++){
         output += '<Row>\n'
@@ -384,17 +384,15 @@ async function importBin(event){
         }
     }
 
-    document.getElementById("lvlName").value = col[0][0].text.slice(col[0][0].text.indexOf('<Level name=') + 13, col[0][0].text.length -2)
+    bininfo = col[0][0].text.split('=')
+    document.getElementById("lvlName").value = extractFirstText(bininfo[bininfo.length-1])
 
-    if(col[0][0].text.indexOf('author=')){
-        document.getElementById("authName").value = col[0][0].text.slice(col[0][0].text.indexOf('author=') + 8, col[0][0].text.indexOf('<Level name=') -4)
-    }else{
-        document.getElementById("authName").value = "Undefined"
-    }
-    
-    if(col[0][0].text.indexOf('tileset=')){
+    // bininfo[1] = editorVersion
+    // bininfo[2] = uuid
+
+    if(col[0][0].text.includes('tileset=')){
         for(let i = 0; i < tilesetNames.length; i++){
-            if(tilesetNames[i].folder == col[0][0].text.slice(col[0][0].text.indexOf('tileset=') + 9, col[0][0].text.indexOf('author="') -2)){
+            if(tilesetNames[i].folder == extractFirstText(bininfo[3])){
                 switchTileset(i)
             }
         }
@@ -402,10 +400,21 @@ async function importBin(event){
         switchTileset(0)
     }
 
+    if(col[0][0].text.includes('author=')){
+        document.getElementById("authName").value = extractFirstText(bininfo[4])
+    }else{
+        document.getElementById("authName").value = "Undefined"
+    }
+
     setLayer(6)
     setCanvasSize(col[1].length - 1, rows.length - 1, false)
     draw()
 
+}
+
+function extractFirstText(str){
+    var matches = str.match(/"(.*?)"/)
+    return matches[1]
 }
 
 //Reset state to empty
@@ -564,8 +573,12 @@ function download(filename) {
     if(filename == '') filename = 'unnamed'
     var pom = document.createElement('a');
     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportLevel(filename)));
-    pom.setAttribute('download', `${filename}.bin`);
-  
+    if(document.getElementById("authName").value != ''){
+        pom.setAttribute('download', `${filename} by ${document.getElementById("authName").value}.bin`);
+    }else{
+        pom.setAttribute('download', `${filename}.bin`);
+    }
+    
     pom.style.display = 'none';
     document.body.appendChild(pom);
   
