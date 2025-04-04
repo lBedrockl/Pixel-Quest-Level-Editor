@@ -573,7 +573,7 @@ function download(filename) {
     if(filename == '') filename = 'unnamed'
     var pom = document.createElement('a');
     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportLevel(filename)));
-    if(document.getElementById("authName").value != '' && document.getElementById("authName").value != 'Undefined'){
+    if(document.getElementById("authName").value != ''){
         pom.setAttribute('download', `${filename} by ${document.getElementById("authName").value}.bin`);
     }else{
         pom.setAttribute('download', `${filename}.bin`);
