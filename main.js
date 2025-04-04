@@ -403,7 +403,7 @@ async function importBin(event){
     if(col[0][0].text.includes('author=')){
         document.getElementById("authName").value = extractFirstText(bininfo[4])
     }else{
-        document.getElementById("authName").value = "Undefined"
+        document.getElementById("authName").value = ""
     }
 
     setLayer(6)
