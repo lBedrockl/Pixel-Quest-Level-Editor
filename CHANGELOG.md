@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.9] unreleased
+### Fixed
+- bin file name wont say `My Level by Undefined.bin` when exporting with the default import name
+
 ## [1.4.8]
 ### Fixed
 - All importing bugs are gone, yippe

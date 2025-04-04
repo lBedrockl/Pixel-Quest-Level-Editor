@@ -21,7 +21,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.8';
+var editorVer = '1.4.9';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -573,7 +573,7 @@ function download(filename) {
     if(filename == '') filename = 'unnamed'
     var pom = document.createElement('a');
     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportLevel(filename)));
-    if(document.getElementById("authName").value != ''){
+    if(document.getElementById("authName").value != '' && document.getElementById("authName").value != 'Undefined'){
         pom.setAttribute('download', `${filename} by ${document.getElementById("authName").value}.bin`);
     }else{
         pom.setAttribute('download', `${filename}.bin`);
