@@ -1,3 +1,4 @@
+const body = document.querySelector("body");
 var canvas = document.querySelector("#canvas");
 var canvasSelection = document.querySelector(".canvas-container_selection");
 
@@ -42,6 +43,8 @@ var placingBox = false;
 var isMouseDown = false;
 var isMouseOn = false;
 var currentLayer = 0;
+var currentCoords = [0,0]; //mouse coords for copy paste because keyboard events no update the mouse coords
+var clipboard = {};
 var layers = [
    //background
    {
@@ -59,6 +62,8 @@ var layers = [
    //volumes
    {}
 ];
+
+document.addEventListener("keypress", (event) => {updateHover(event)});
 
 document.addEventListener('contextmenu', event => {
     event.preventDefault();
@@ -126,44 +131,81 @@ var boxStart
 //Handler for placing new tiles on the map
 function addTile(mouseEvent) {
     if(currentLayer != 6){
-        var clicked = getCoords(event, 16);
-        var key = clicked[0] + "-" + clicked[1];
+        var mousePos = getCoords(mouseEvent, 16);
+        var key = mousePos[0] + "-" + mousePos[1];
 
-        console.log(mouseEvent.button)
-        if(mouseEvent.button == 2){
+        if(mouseEvent.button != 0 && mouseEvent.type != "keydown"){
             boxPlace = false
-        }else if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){
-            if(boxPlace){
-                //loop over everytile within bounds
-                if(boxStart[0] < clicked[0]){
-                    for(let i = boxStart[0]; i <= clicked[0];i++){
-                        if(boxStart[1] < clicked[1]){
-                            for(let o = boxStart[1]; o <= clicked[1];o++){
-                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
+        }else if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){ //MARK: copy paste
+            if(mouseEvent.key == 'c' && boxPlace || mouseEvent.key == 'x' && boxPlace){
+                boxPlace = false
+                clipboard['size'] = [Math.abs(boxStart[0] - mousePos[0]), Math.abs(boxStart[1] - mousePos[1])]
+                if(boxStart[0] < mousePos[0]){
+                    for(let i = boxStart[0]; i <= mousePos[0];i++){
+                        if(boxStart[1] < mousePos[1]){
+                            for(let o = boxStart[1]; o <= mousePos[1];o++){
+                                copyPaste((i - boxStart[0]) + "-" + (o - boxStart[1]), i + "-" + o, mouseEvent.key)
                             }
                         }else{
-                            for(let o = boxStart[1]; o >= clicked[1];o--){
-                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                            for(let o = boxStart[1]; o >= mousePos[1];o--){
+                                copyPaste((i - boxStart[0]) + "-" + (o - mousePos[1]), i + "-" + o, mouseEvent.key)
                             }
                         }
                     }
                 }else{
-                    for(let i = boxStart[0]; i >= clicked[0];i--){
-                        if(boxStart[1] < clicked[1]){
-                            for(let o = boxStart[1]; o <= clicked[1];o++){
-                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                    for(let i = boxStart[0]; i >= mousePos[0];i--){
+                        if(boxStart[1] < mousePos[1]){
+                            for(let o = boxStart[1]; o <= mousePos[1];o++){
+                                copyPaste((i - mousePos[0]) + "-" + (o - boxStart[1]), i + "-" + o, mouseEvent.key)
                             }
                         }else{
-                            for(let o = boxStart[1]; o >= clicked[1];o--){
-                                loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                            for(let o = boxStart[1]; o >= mousePos[1];o--){
+                                copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]), i + "-" + o, mouseEvent.key)
                             }
                         }
                     }
                 }
-            }else{
-                boxStart = clicked
+            }else if(mouseEvent.key == 'v'){
+                boxPlace = false
+                for(let i = mousePos[0]; i <= mousePos[0] + clipboard['size'][0];i++){
+                    for(let o = mousePos[1]; o <= mousePos[1] + clipboard['size'][1];o++){
+                        copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]) ,i + "-" + o, mouseEvent.key)
+                    }
+                }
             }
-            boxPlace = !boxPlace
+            if(mouseEvent.type == 'mousedown'){ //MARK: boxplace
+                if(boxPlace){
+                    //loop over everytile within bounds
+                    if(boxStart[0] < mousePos[0]){
+                        for(let i = boxStart[0]; i <= mousePos[0];i++){
+                            if(boxStart[1] < mousePos[1]){
+                                for(let o = boxStart[1]; o <= mousePos[1];o++){
+                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                                }
+                            }else{
+                                for(let o = boxStart[1]; o >= mousePos[1];o--){
+                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                                }
+                            }
+                        }
+                    }else{
+                        for(let i = boxStart[0]; i >= mousePos[0];i--){
+                            if(boxStart[1] < mousePos[1]){
+                                for(let o = boxStart[1]; o <= mousePos[1];o++){
+                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                                }
+                            }else{
+                                for(let o = boxStart[1]; o >= mousePos[1];o--){
+                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    boxStart = mousePos
+                }
+                boxPlace = !boxPlace
+            }
         }else if(mouseEvent.shiftKey){
             delete layers[currentLayer][key];
         }else{
@@ -192,9 +234,31 @@ function loopPlace(newKey, remove){
     
 }
 
+function copyPaste(clipKey, layerKey, keyPressed){
+    if(currentLayer != 5){
+        switch (keyPressed){
+            case "c":
+                clipboard[clipKey] = layers[currentLayer][layerKey]
+            break
+            case "x":
+                clipboard[clipKey] = layers[currentLayer][layerKey]
+                delete layers[currentLayer][layerKey];
+            break
+            case "v":
+                if(clipboard[clipKey] != undefined) {
+                    layers[currentLayer][layerKey] = clipboard[clipKey]
+                    
+                }
+            break
+        }
+    }
+}
+
+var buttonDown = 0;
 //Bind mouse events for painting (or removing) tiles on click/drag
 canvas.addEventListener("mousedown", (event) => {
     isMouseDown = true
+    buttonDown = event.button
     updateHover(event)
     addTile(event)
 });
@@ -212,7 +276,7 @@ canvas.addEventListener("mouseleave", () => {
 
 canvas.addEventListener("mousemove", (event) => {
     isMouseOn = true
-    if(isMouseDown && !boxPlace) addTile(event)
+    if(isMouseDown && !boxPlace && buttonDown == 0) addTile(event)
     updateHover(event)
 });
 
@@ -222,6 +286,10 @@ onkeyup = updateHover
 function updateHover(e){
     if(isMouseOn){
         if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
+        else if(e.ctrlKey && e.key == 'c' || e.ctrlKey && e.key == 'x' || e.ctrlKey && e.key == 'v') {
+            canvasSelection.style.outline = '3px solid yellow'
+            addTile(e)
+        }
         else if(boxPlace) canvasSelection.style.outline = '3px solid lime'
         else canvasSelection.style.outline = `3px solid ${selectionColor}`
         var coords = getCoords(e, 16)
@@ -241,13 +309,15 @@ function updateHover(e){
 
 //Utility for getting coordinates of mouse click
 function getCoords(e, px) {
+    if(e.key != null) return currentCoords //jank
     const { x , y , width , height } = e.target.getBoundingClientRect()
     const mouseX = Math.abs(e.clientX - x)
     const mouseY = Math.abs(e.clientY - y)
-    return [
+    currentCoords = [
         Math.min(Math.floor(mouseX / px), width),
         Math.min(Math.floor(mouseY / px), height)
     ]
+    return currentCoords
 }
 
 //converts data to image:data string and pipes into new browser tab
