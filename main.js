@@ -60,6 +60,10 @@ var layers = [
    {}
 ];
 
+document.addEventListener('contextmenu', event => {
+    event.preventDefault();
+});
+
 //MARK: Listeners
 tilesetImage.addEventListener("mousedown", (event) => {
    if(currentLayer == 3 || currentLayer == 5) setLayer(1)
