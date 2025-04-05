@@ -85,9 +85,9 @@ volumeImage.addEventListener("mousedown", (event) => {
     selectionVol = getCoords(event, 16);
     volumeSelection.style.left = selectionVol[0] * 16 + "px";
     volumeSelection.style.top = selectionVol[1] * 16 + "px";
- });
+});
 
- volumeImage.addEventListener("mouseleave", () => {
+volumeImage.addEventListener("mouseleave", () => {
     volumeSelection2.style.outline = '0px solid black'
 });
 
@@ -124,8 +124,11 @@ function addTile(mouseEvent) {
     if(currentLayer != 6){
         var clicked = getCoords(event, 16);
         var key = clicked[0] + "-" + clicked[1];
-        
-        if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){
+
+        console.log(mouseEvent.button)
+        if(mouseEvent.button == 2){
+            boxPlace = false
+        }else if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){
             if(boxPlace){
                 //loop over everytile within bounds
                 if(boxStart[0] < clicked[0]){
@@ -198,10 +201,9 @@ canvas.addEventListener("mouseup", (event) => {
 });
 
 canvas.addEventListener("mouseleave", () => {
-    boxPlace = false
     isMouseDown = false
     isMouseOn = false
-    canvasSelection.style.outline = 'black'
+    if(!boxPlace) canvasSelection.style.outline = 'black'
 });
 
 canvas.addEventListener("mousemove", (event) => {

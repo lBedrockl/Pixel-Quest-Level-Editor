@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.4.9] unreleased
 ### Fixed
-- bin file name wont say `My Level by Undefined.bin` when exporting with the default import name
+- While box placing it will no longer cancel if mouse is moved off canvas
+- You can now use right click to cancel a box place
 
 ## [1.4.8]
 ### Fixed
