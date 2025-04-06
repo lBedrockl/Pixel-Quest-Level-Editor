@@ -362,6 +362,9 @@ input[type=checkbox]:checked:after {
   details[open] .inst-dd {
     display: block;
   }
+  details{
+    margin-bottom: -10px;
+  }
   summary{
     margin-bottom: 5px;
   }
