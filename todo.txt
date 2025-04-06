@@ -7,6 +7,8 @@ FINISH Cyber Tileset
 
 finish copy paste, needs volume, objects, and an all layer copy paste
 
+import to clipboard once copy all works
+
 
 
 

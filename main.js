@@ -22,7 +22,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.4.9';
+var editorVer = '1.5.0';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -134,9 +134,13 @@ function addTile(mouseEvent) {
         var mousePos = getCoords(mouseEvent, 16);
         var key = mousePos[0] + "-" + mousePos[1];
 
-        if(mouseEvent.button != 0 && mouseEvent.type != "keydown"){
-            boxPlace = false
-        }else if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){ //MARK: copy paste
+        if(mouseEvent.button == 1 || mouseEvent.button >= 3){
+            //1 middle mouse, 3 back page, 4 forward pagecvxcvxcvx
+        }else if(mouseEvent.button == 2){
+            if(!boxPlace) boxStart = mousePos
+            boxPlace = !boxPlace
+            
+        }else if(currentLayer != 3 && mouseEvent.ctrlKey){ //MARK: copy paste
             if(mouseEvent.key == 'c' && boxPlace || mouseEvent.key == 'x' && boxPlace){
                 boxPlace = false
                 clipboard['storing'] = true
@@ -166,7 +170,7 @@ function addTile(mouseEvent) {
                         }
                     }
                 }
-            }else if(mouseEvent.key == 'v'){
+            }else if(mouseEvent.key == 'v' && !boxPlace){
                 boxPlace = false
                 for(let i = mousePos[0]; i <= mousePos[0] + clipboard['size'][0];i++){
                     for(let o = mousePos[1]; o <= mousePos[1] + clipboard['size'][1];o++){
@@ -174,39 +178,34 @@ function addTile(mouseEvent) {
                     }
                 }
             }
-            if(mouseEvent.type == 'mousedown'){ //MARK: boxplace
-                if(boxPlace){
-                    //loop over everytile within bounds
-                    if(boxStart[0] < mousePos[0]){
-                        for(let i = boxStart[0]; i <= mousePos[0];i++){
-                            if(boxStart[1] < mousePos[1]){
-                                for(let o = boxStart[1]; o <= mousePos[1];o++){
-                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
-                                }
-                            }else{
-                                for(let o = boxStart[1]; o >= mousePos[1];o--){
-                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
-                                }
-                            }
+        }else if(mouseEvent.button == 0 && boxPlace && currentLayer != 3){
+            //loop over everytile within bounds
+            if(boxStart[0] < mousePos[0]){
+                for(let i = boxStart[0]; i <= mousePos[0];i++){
+                    if(boxStart[1] < mousePos[1]){
+                        for(let o = boxStart[1]; o <= mousePos[1];o++){
+                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
                         }
                     }else{
-                        for(let i = boxStart[0]; i >= mousePos[0];i--){
-                            if(boxStart[1] < mousePos[1]){
-                                for(let o = boxStart[1]; o <= mousePos[1];o++){
-                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
-                                }
-                            }else{
-                                for(let o = boxStart[1]; o >= mousePos[1];o--){
-                                    loopPlace(i + "-" + o, mouseEvent.shiftKey)
-                                }
-                            }
+                        for(let o = boxStart[1]; o >= mousePos[1];o--){
+                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
                         }
                     }
-                }else{
-                    boxStart = mousePos
                 }
-                boxPlace = !boxPlace
+            }else{
+                for(let i = boxStart[0]; i >= mousePos[0];i--){
+                    if(boxStart[1] < mousePos[1]){
+                        for(let o = boxStart[1]; o <= mousePos[1];o++){
+                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                        }
+                    }else{
+                        for(let o = boxStart[1]; o >= mousePos[1];o--){
+                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                        }
+                    }
+                }
             }
+            boxPlace = !boxPlace // remove this to make placing not cancel
         }else if(mouseEvent.shiftKey){
             delete layers[currentLayer][key];
         }else{
@@ -286,7 +285,7 @@ onkeyup = updateHover
 function updateHover(e){
     if(isMouseOn){
         var coords = getCoords(e, 16)
-        if(clipboard['storing'] && e.ctrlKey){
+        if(clipboard['storing'] && e.ctrlKey && !boxPlace){
             canvasSelection.style.outline = '3px solid yellow'
             canvasSelection.style.width = (clipboard['size'][0] + 1) * 16 + 'px'
             canvasSelection.style.height = (clipboard['size'][1] + 1) * 16 + 'px'
@@ -319,8 +318,8 @@ function updateHover(e){
             canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
             canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
         }
-        if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
-        if(e.ctrlKey && e.key == 'c' || e.ctrlKey && e.key == 'x' || e.ctrlKey && e.key == 'v') {
+        if(e.shiftKey && !e.ctrlKey) canvasSelection.style.outline = '3px solid red'
+        if(e.ctrlKey && e.key == 'c' && boxPlace || e.ctrlKey && e.key == 'x' && boxPlace || e.ctrlKey && e.key == 'v' && !boxPlace) {
             canvasSelection.style.outline = '3px solid yellow'
             addTile(e)
         }

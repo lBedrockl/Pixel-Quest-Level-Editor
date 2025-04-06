@@ -4,9 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.4.9] unreleased
+## [1.5.0] unreleased
+### Changed
+- Box place now uses right click to not conflict with copy paste
+
+### Fixed
+- Paste now doesn't show or work while box place active
+- Holding shift and ctrl does show red now
+
+## [1.4.9]
 ### Added
-- You can now copy paste using box place, cut and copy also works, doesnt work for volumes or objects "yet"
+- You can now copy paste using box place, cut and copy also works, doesn't work for volumes or objects "yet"
 - The copied section has an outline
 - Objects now also have a correct outline
 
