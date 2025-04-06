@@ -44,7 +44,7 @@ var isMouseDown = false;
 var isMouseOn = false;
 var currentLayer = 0;
 var currentCoords = [0,0]; //mouse coords for copy paste because keyboard events no update the mouse coords
-var clipboard = {};
+var clipboard = {'storing': false};
 var layers = [
    //background
    {
@@ -139,6 +139,7 @@ function addTile(mouseEvent) {
         }else if(currentLayer != 3 && mouseEvent.ctrlKey || currentLayer != 3 && boxPlace){ //MARK: copy paste
             if(mouseEvent.key == 'c' && boxPlace || mouseEvent.key == 'x' && boxPlace){
                 boxPlace = false
+                clipboard['storing'] = true
                 clipboard['size'] = [Math.abs(boxStart[0] - mousePos[0]), Math.abs(boxStart[1] - mousePos[1])]
                 if(boxStart[0] < mousePos[0]){
                     for(let i = boxStart[0]; i <= mousePos[0];i++){
@@ -247,7 +248,6 @@ function copyPaste(clipKey, layerKey, keyPressed){
             case "v":
                 if(clipboard[clipKey] != undefined) {
                     layers[currentLayer][layerKey] = clipboard[clipKey]
-                    
                 }
             break
         }
@@ -285,24 +285,44 @@ onkeyup = updateHover
 
 function updateHover(e){
     if(isMouseOn){
-        if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
-        else if(e.ctrlKey && e.key == 'c' || e.ctrlKey && e.key == 'x' || e.ctrlKey && e.key == 'v') {
-            canvasSelection.style.outline = '3px solid yellow'
-            addTile(e)
-        }
-        else if(boxPlace) canvasSelection.style.outline = '3px solid lime'
-        else canvasSelection.style.outline = `3px solid ${selectionColor}`
         var coords = getCoords(e, 16)
-        if(boxPlace){
+        if(clipboard['storing'] && e.ctrlKey){
+            canvasSelection.style.outline = '3px solid yellow'
+            canvasSelection.style.width = (clipboard['size'][0] + 1) * 16 + 'px'
+            canvasSelection.style.height = (clipboard['size'][1] + 1) * 16 + 'px'
+            canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
+            canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
+        }else if(boxPlace){
+            canvasSelection.style.outline = '3px solid lime'
             canvasSelection.style.width = (Math.abs(boxStart[0] - coords[0]) + 1) * 16 + 'px'
             canvasSelection.style.height = (Math.abs(boxStart[1] - coords[1]) + 1) * 16 + 'px'
             canvasSelection.style.left = canvas.offsetLeft + Math.min(boxStart[0], coords[0]) * 16 + 'px'
             canvasSelection.style.top = canvas.offsetTop + Math.min(boxStart[1], coords[1]) * 16 + 'px'
+        }else if(currentLayer == 3){
+            var offset = calcOffset(((selectionObj[1] * 2) + selectionObj[0]))
+            var size = calcSize(((selectionObj[1] * 2) + selectionObj[0]))
+            //console.log('size ' + size + "   object " + ((selectionObj[1] * 2) + selectionObj[0]))
+            if(size[2] == 'ignore') offset = [0,0]
+            if(size[2] == 'shift right') offset = [offset[0]+1, offset[1]]
+            if(size[2] == 'turret') offset = [-1, 0]
+            if(size[2] == 'torch') offset = [0, -1]
+
+            canvasSelection.style.outline = `3px solid ${selectionColor}`
+            canvasSelection.style.width = size[0] * 16 + 'px'
+            canvasSelection.style.height = size[1] * 16 + 'px'
+            canvasSelection.style.left = canvas.offsetLeft + (coords[0] + offset[0]) * 16 + 'px'
+            canvasSelection.style.top = canvas.offsetTop + (coords[1] + offset[1]) * 16 + 'px'
         }else{
+            canvasSelection.style.outline = `3px solid ${selectionColor}`
             canvasSelection.style.width = '16px'
             canvasSelection.style.height = '16px'
             canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
             canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
+        }
+        if(e.shiftKey) canvasSelection.style.outline = '3px solid red'
+        if(e.ctrlKey && e.key == 'c' || e.ctrlKey && e.key == 'x' || e.ctrlKey && e.key == 'v') {
+            canvasSelection.style.outline = '3px solid yellow'
+            addTile(e)
         }
     }
 }
@@ -577,6 +597,27 @@ function draw() {
       });
       curLayer++
    });
+}
+
+function calcSize(value){ //outline size
+    switch(value){
+        case 3: case 6: case 9: case 14: case 18: case 28: case 29: case 30: case 31: case 32:
+            return [1, 1, 'ignore']
+        case 12:
+            return [2, 2, 'ignore']
+        case 0: case 1: case 2: case 13: case 15: case 16: case 17:
+            return [3, 3]
+        case 19: case 24: case 25:
+            return [1, 3, 'shift right']
+        case 20: case 21: case 4: case 5: case 7: case 8: case 10: case 11:
+            return [3, 1, 'ignore']
+        case 22: case 23:
+            return [3, 1, 'turret']
+        case 26:
+            return [1, 2, 'torch']
+        case 27:
+            return [1, 2, 'ignore']
+    }
 }
 
 function calcOffset(value){ //when object is draw to screen calc offset so center points match up

@@ -5,6 +5,8 @@ FINISH Cyber Tileset
 
 
 
+finish copy paste, needs volume, objects, and an all layer copy paste
+
 
 
 
@@ -23,9 +25,3 @@ fix when clicking on object container colors dont update
 IDK
 
 x box place removing always shows small box at box place start, weird
-
-
-New Feature Ideas
-
-per object start delay, would need a new tile sheet for 1-15, empty for random
-<Objects sheet="Objects" seed="3">0</Objects>

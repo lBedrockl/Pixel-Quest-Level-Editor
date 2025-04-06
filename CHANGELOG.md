@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.4.9] unreleased
 ### Added
 - You can now copy paste using box place, cut and copy also works, doesnt work for volumes or objects "yet"
+- The copied section has an outline
+- Objects now also have a correct outline
+
+### Changed
+- Controls menu is now a drop down
 
 ### Fixed
 - While box placing it will no longer cancel if mouse is moved off canvas
