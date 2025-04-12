@@ -8,13 +8,15 @@
 
 - Volume Layer for hitboxes 
 
-  - blue = solid
+  - Blue = Solid
 
-  - green = oneway
+  - Green = One way
 
-  - pink = moving object reflect
+  - Pink = Moving object reflect
 
-  - red = killbox
+  - Red = Killbox
+
+  - Cyan = Drown Killbox
 
 - Level must have a Blue door (Start) and a Red Door (End)
 
@@ -24,7 +26,7 @@
 
 - Pick a tileset from the dropdown
 
-- I can add new custom ones to the Github along with a swf, just DM me a working swf and tileset
+- Custom tilesets are a wip, but you can make your own and add it to the editor and swf
 
 ### [Tutorials]
 

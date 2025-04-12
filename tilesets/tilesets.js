@@ -12,6 +12,7 @@
             color: 'orange',
             tile: true,
             object: true,
+            volume: true, // needs a drown volume
             background: true,
             bgColor: '#B3B6CA'
         },{
@@ -44,7 +45,7 @@
         //     color: '#ffffff or white',
         //     tile: false,
         //     object: true,
-        //     volume: true, //not implemented will be used for custom objects and volumes
+        //     volume: true,
         //     background: true,
         //     bgColor: '#939EEB'
         // }

@@ -535,20 +535,10 @@ function setLayer(newLayer) {
 }
 
 function draw() {
-   var ctx = canvas.getContext("2d");
-   ctx.clearRect(0, 0, canvas.width, canvas.height);
+   var ctx = canvas.getContext("2d")
+   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-//    ctx.globalAlpha = 0.1
-//    ctx.fillStyle = "black";
-//    let mod = 0
-//    for(var x = 0;x < canvas.width; x+= 16){
-//        for(var y = 0;y < canvas.height; y+= 16){
-//            if(((y/16) + mod) % 2 == 0) ctx.fillRect(x, y, 16, 16)
-//        } 
-//        mod++
-//    }
-
-   var size_of_crop = 16;
+   var size_of_crop = 16
    var curLayer = 0
    layers.forEach((layer) => {
       Object.keys(layer).forEach((key) => {

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.5.0] unreleased
+### Added
+- Lost Gifts now has a drown volume used for the drown animation
+
 ### Changed
 - Box place now uses right click to not conflict with copy paste
 
