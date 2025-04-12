@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.5.0] unreleased
 ### Added
-- Added drown volume used for the drown animation in Lost Gifts, but will also work for custom animations
+- Added drown volume used for the drown animation in Lost Gifts, but will also work for custom death animation on any tileset
 
 ### Changed
 - Box place now uses right click to not conflict with copy paste

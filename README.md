@@ -16,7 +16,7 @@
 
   - Red = Killbox
 
-  - Cyan = Drown Killbox
+  - Orange / Cyan = Drown Killbox, color based on lava / ice lava
 
 - Level must have a Blue door (Start) and a Red Door (End)
 
