@@ -12,7 +12,7 @@
             color: 'orange',
             tile: true,
             object: true,
-            volume: true, // needs a drown volume
+            volume: true,
             background: true,
             bgColor: '#B3B6CA'
         },{
@@ -21,6 +21,7 @@
             color: 'orange',
             tile: true,
             object: true,
+            volume: true,
             bgColor: '#B3B6CA'
         }
         /*,{

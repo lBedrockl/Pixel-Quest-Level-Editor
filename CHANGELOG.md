@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.5.0] unreleased
 ### Added
-- Lost Gifts now has a drown volume used for the drown animation
+- Added drown volume used for the drown animation in Lost Gifts, but will also work for custom animations
 
 ### Changed
 - Box place now uses right click to not conflict with copy paste
