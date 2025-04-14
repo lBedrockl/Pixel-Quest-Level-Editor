@@ -45,6 +45,9 @@ var isMouseOn = false;
 var currentLayer = 0;
 var currentCoords = [0,0]; //mouse coords for copy paste because keyboard events no update the mouse coords
 var clipboard = {'storing': false};
+var volClipboard = {'storing': false};
+var objClipboard = {'storing': false};
+var allClipboard = [{'storing': false},{},{},{},{},{}];
 var layers = [
    //background
    {
@@ -129,66 +132,47 @@ objectImage.addEventListener("mousemove", (event) => {
 var boxPlace = false
 var boxStart
 //Handler for placing new tiles on the map
-function addTile(mouseEvent) {
-    if(currentLayer != 6){
-        var mousePos = getCoords(mouseEvent, 16);
-        var key = mousePos[0] + "-" + mousePos[1];
+function addTile(mouseEvent) { //MARK: Add tile
+    var mousePos = getCoords(mouseEvent, 16);
+    var key = mousePos[0] + "-" + mousePos[1];
 
-        if(mouseEvent.button == 1 || mouseEvent.button >= 3){
-            //1 middle mouse, 3 back page, 4 forward pagecvxcvxcvx
-        }else if(mouseEvent.button == 2){
-            if(!boxPlace) boxStart = mousePos
-            boxPlace = !boxPlace
-            
-        }else if(currentLayer != 3 && mouseEvent.ctrlKey){ //MARK: copy paste
-            if(mouseEvent.key == 'c' && boxPlace || mouseEvent.key == 'x' && boxPlace){
-                boxPlace = false
-                clipboard['storing'] = true
-                clipboard['size'] = [Math.abs(boxStart[0] - mousePos[0]), Math.abs(boxStart[1] - mousePos[1])]
-                if(boxStart[0] < mousePos[0]){
-                    for(let i = boxStart[0]; i <= mousePos[0];i++){
-                        if(boxStart[1] < mousePos[1]){
-                            for(let o = boxStart[1]; o <= mousePos[1];o++){
-                                copyPaste((i - boxStart[0]) + "-" + (o - boxStart[1]), i + "-" + o, mouseEvent.key)
-                            }
-                        }else{
-                            for(let o = boxStart[1]; o >= mousePos[1];o--){
-                                copyPaste((i - boxStart[0]) + "-" + (o - mousePos[1]), i + "-" + o, mouseEvent.key)
-                            }
-                        }
-                    }
-                }else{
-                    for(let i = boxStart[0]; i >= mousePos[0];i--){
-                        if(boxStart[1] < mousePos[1]){
-                            for(let o = boxStart[1]; o <= mousePos[1];o++){
-                                copyPaste((i - mousePos[0]) + "-" + (o - boxStart[1]), i + "-" + o, mouseEvent.key)
-                            }
-                        }else{
-                            for(let o = boxStart[1]; o >= mousePos[1];o--){
-                                copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]), i + "-" + o, mouseEvent.key)
-                            }
-                        }
-                    }
-                }
-            }else if(mouseEvent.key == 'v' && !boxPlace){
-                boxPlace = false
-                for(let i = mousePos[0]; i <= mousePos[0] + clipboard['size'][0];i++){
-                    for(let o = mousePos[1]; o <= mousePos[1] + clipboard['size'][1];o++){
-                        copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]) ,i + "-" + o, mouseEvent.key)
-                    }
-                }
+    if(mouseEvent.button == 1 || mouseEvent.button >= 3){
+        //1 middle mouse, 3 back page, 4 forward page
+    }else if(mouseEvent.button == 2){ //box place
+        if(!boxPlace) boxStart = mousePos
+        boxPlace = !boxPlace
+        
+    }else if(mouseEvent.ctrlKey){ //copy paste
+        var usedClipboard = {}
+        switch(currentLayer){
+            case 0: case 1: case 2: case 4:
+                usedClipboard = clipboard; break;
+            case 3:
+                usedClipboard = objClipboard; break;
+            case 5:
+                usedClipboard = volClipboard; break;
+            case 6:
+                usedClipboard = allClipboard; break;
+        }
+        if(mouseEvent.key == 'c' && boxPlace || mouseEvent.key == 'x' && boxPlace){
+            boxPlace = false
+            if(currentLayer == 6){
+                usedClipboard[0]['storing'] = true
+                usedClipboard[0]['size'] = [Math.abs(boxStart[0] - mousePos[0]), Math.abs(boxStart[1] - mousePos[1])]
+            }else{
+                usedClipboard['storing'] = true
+                usedClipboard['size'] = [Math.abs(boxStart[0] - mousePos[0]), Math.abs(boxStart[1] - mousePos[1])]
             }
-        }else if(mouseEvent.button == 0 && boxPlace && currentLayer != 3){
-            //loop over everytile within bounds
+
             if(boxStart[0] < mousePos[0]){
                 for(let i = boxStart[0]; i <= mousePos[0];i++){
                     if(boxStart[1] < mousePos[1]){
                         for(let o = boxStart[1]; o <= mousePos[1];o++){
-                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                            copyPaste((i - boxStart[0]) + "-" + (o - boxStart[1]), i + "-" + o, mouseEvent.key)
                         }
                     }else{
                         for(let o = boxStart[1]; o >= mousePos[1];o--){
-                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                            copyPaste((i - boxStart[0]) + "-" + (o - mousePos[1]), i + "-" + o, mouseEvent.key)
                         }
                     }
                 }
@@ -196,29 +180,71 @@ function addTile(mouseEvent) {
                 for(let i = boxStart[0]; i >= mousePos[0];i--){
                     if(boxStart[1] < mousePos[1]){
                         for(let o = boxStart[1]; o <= mousePos[1];o++){
-                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                            copyPaste((i - mousePos[0]) + "-" + (o - boxStart[1]), i + "-" + o, mouseEvent.key)
                         }
                     }else{
                         for(let o = boxStart[1]; o >= mousePos[1];o--){
-                            loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                            copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]), i + "-" + o, mouseEvent.key)
                         }
                     }
                 }
             }
-            boxPlace = !boxPlace // remove this to make placing not cancel
-        }else if(mouseEvent.shiftKey){
-            delete layers[currentLayer][key];
-        }else{
-            if(currentLayer == 3){
-                layers[currentLayer][key] = [selectionObj[0], selectionObj[1]];
-            }else if(currentLayer == 5){
-                layers[currentLayer][key] = [selectionVol[0], selectionVol[1]];
+        }else if(mouseEvent.key == 'v' && !boxPlace){
+            boxPlace = false
+            if(currentLayer == 6){
+                for(let i = mousePos[0]; i <= mousePos[0] + usedClipboard[0]['size'][0];i++){
+                    for(let o = mousePos[1]; o <= mousePos[1] + usedClipboard[0]['size'][1];o++){
+                        copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]) ,i + "-" + o, mouseEvent.key)
+                    }
+                }
             }else{
-                layers[currentLayer][key] = [selection[0], selection[1]];
+                for(let i = mousePos[0]; i <= mousePos[0] + usedClipboard['size'][0];i++){
+                    for(let o = mousePos[1]; o <= mousePos[1] + usedClipboard['size'][1];o++){
+                        copyPaste((i - mousePos[0]) + "-" + (o - mousePos[1]) ,i + "-" + o, mouseEvent.key)
+                    }
+                }
             }
         }
-        draw();
+    }else if(mouseEvent.button == 0 && boxPlace && currentLayer != 3 && currentLayer != 6){
+        //loop over everytile within bounds
+        if(boxStart[0] < mousePos[0]){
+            for(let i = boxStart[0]; i <= mousePos[0];i++){
+                if(boxStart[1] < mousePos[1]){
+                    for(let o = boxStart[1]; o <= mousePos[1];o++){
+                        loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                    }
+                }else{
+                    for(let o = boxStart[1]; o >= mousePos[1];o--){
+                        loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                    }
+                }
+            }
+        }else{
+            for(let i = boxStart[0]; i >= mousePos[0];i--){
+                if(boxStart[1] < mousePos[1]){
+                    for(let o = boxStart[1]; o <= mousePos[1];o++){
+                        loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                    }
+                }else{
+                    for(let o = boxStart[1]; o >= mousePos[1];o--){
+                        loopPlace(i + "-" + o, mouseEvent.shiftKey)
+                    }
+                }
+            }
+        }
+        boxPlace = !boxPlace // remove this to make placing not cancel
+    }else if(mouseEvent.shiftKey && currentLayer != 6){
+        delete layers[currentLayer][key];
+    }else if(currentLayer != 6){
+        if(currentLayer == 3){
+            layers[currentLayer][key] = [selectionObj[0], selectionObj[1]];
+        }else if(currentLayer == 5){
+            layers[currentLayer][key] = [selectionVol[0], selectionVol[1]];
+        }else{
+            layers[currentLayer][key] = [selection[0], selection[1]];
+        }
     }
+    draw();
 }
 
 function loopPlace(newKey, remove){
@@ -235,21 +261,73 @@ function loopPlace(newKey, remove){
 }
 
 function copyPaste(clipKey, layerKey, keyPressed){
-    if(currentLayer != 5){
-        switch (keyPressed){
-            case "c":
-                clipboard[clipKey] = layers[currentLayer][layerKey]
+    switch(currentLayer){
+        case 0: case 1: case 2: case 4://tiles
+            switch (keyPressed){
+                case "c":
+                    clipboard[clipKey] = layers[currentLayer][layerKey]
+                    break
+                case "x":
+                    clipboard[clipKey] = layers[currentLayer][layerKey]
+                    delete layers[currentLayer][layerKey];
+                    break
+                case "v":
+                    if(clipboard[clipKey] != undefined) {
+                        layers[currentLayer][layerKey] = clipboard[clipKey]
+                    }
+                    break
+            }
             break
-            case "x":
-                clipboard[clipKey] = layers[currentLayer][layerKey]
-                delete layers[currentLayer][layerKey];
+        case 3: //objects
+            switch (keyPressed){
+                case "c":
+                    objClipboard[clipKey] = layers[currentLayer][layerKey]
+                    break
+                case "x":
+                    objClipboard[clipKey] = layers[currentLayer][layerKey]
+                    delete layers[currentLayer][layerKey];
+                    break
+                case "v":
+                    if(objClipboard[clipKey] != undefined) {
+                        layers[currentLayer][layerKey] = objClipboard[clipKey]
+                    }
+                    break
+            }
             break
-            case "v":
-                if(clipboard[clipKey] != undefined) {
-                    layers[currentLayer][layerKey] = clipboard[clipKey]
+        case 5: //volumes
+            switch (keyPressed){
+                case "c":
+                    volClipboard[clipKey] = layers[currentLayer][layerKey]
+                    break
+                case "x":
+                    volClipboard[clipKey] = layers[currentLayer][layerKey]
+                    delete layers[currentLayer][layerKey];
+                    break
+                case "v":
+                    if(volClipboard[clipKey] != undefined) {
+                        layers[currentLayer][layerKey] = volClipboard[clipKey]
+                    }
+                    break
+            }
+            break
+        case 6: //everything
+            for(i = 0; i < 6; i++){
+                switch (keyPressed){
+                    case "c":
+                        allClipboard[i][clipKey] = layers[i][layerKey]
+                        break
+                    case "x":
+                        allClipboard[i][clipKey] = layers[i][layerKey]
+                        delete layers[i][layerKey]
+                        break
+                    case "v":
+                        if(allClipboard[i][clipKey] != undefined) {
+                            layers[i][layerKey] = allClipboard[i][clipKey]
+                        }
+                        break
                 }
+            }
             break
-        }
     }
 }
 
@@ -282,13 +360,42 @@ canvas.addEventListener("mousemove", (event) => {
 onkeydown = updateHover
 onkeyup = updateHover
 
-function updateHover(e){
+function updateHover(e){ //MARK: Update Hover
     if(isMouseOn){
         var coords = getCoords(e, 16)
-        if(clipboard['storing'] && e.ctrlKey && !boxPlace){
+        var pastable = false
+        if(e.ctrlKey && !boxPlace){
+            var usedClipboard = {}
+            switch(currentLayer){
+                case 0: case 1: case 2: case 4:
+                    usedClipboard = clipboard
+                    break
+                case 3:
+                    usedClipboard = objClipboard
+                    break
+                case 5:
+                    usedClipboard = volClipboard
+                    break
+                case 6:
+                    usedClipboard = allClipboard
+                    break
+            }
+            if(currentLayer == 6){
+                if(usedClipboard[0]['storing']) pastable = true
+            }else{
+                if(usedClipboard['storing']) pastable = true
+            }
+        }
+        
+        if(e.ctrlKey && !boxPlace && pastable){
             canvasSelection.style.outline = '3px solid yellow'
-            canvasSelection.style.width = (clipboard['size'][0] + 1) * 16 + 'px'
-            canvasSelection.style.height = (clipboard['size'][1] + 1) * 16 + 'px'
+            if(currentLayer == 6){
+                canvasSelection.style.width = (usedClipboard[0]['size'][0] + 1) * 16 + 'px'
+                canvasSelection.style.height = (usedClipboard[0]['size'][1] + 1) * 16 + 'px'
+            }else{
+                canvasSelection.style.width = (usedClipboard['size'][0] + 1) * 16 + 'px'
+                canvasSelection.style.height = (usedClipboard['size'][1] + 1) * 16 + 'px'
+            }
             canvasSelection.style.left = canvas.offsetLeft + coords[0] * 16 + 'px'
             canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
         }else if(boxPlace){
@@ -319,7 +426,7 @@ function updateHover(e){
             canvasSelection.style.top = canvas.offsetTop + coords[1] * 16 + 'px'
         }
         if(e.shiftKey && !e.ctrlKey) canvasSelection.style.outline = '3px solid red'
-        if(e.ctrlKey && e.key == 'c' && boxPlace || e.ctrlKey && e.key == 'x' && boxPlace || e.ctrlKey && e.key == 'v' && !boxPlace) {
+        if(e.ctrlKey && e.key == 'c' && boxPlace || e.ctrlKey && e.key == 'x' && boxPlace || e.ctrlKey && e.key == 'v' && !boxPlace && pastable) {
             canvasSelection.style.outline = '3px solid yellow'
             addTile(e)
         }
@@ -340,7 +447,7 @@ function getCoords(e, px) {
 }
 
 //converts data to image:data string and pipes into new browser tab
-function exportLevel(name) {
+function exportLevel(name) { //MARK: Export
 	let output = ''
     for(let y = 0; y < canvas.height / 16; y++){
         output += '<Row>\n'
@@ -391,7 +498,7 @@ function exportLevel(name) {
     return `${start}\n${output}${end}` //xml output
 }
 
-async function importBin(event){
+async function importBin(event){ //MARK: Import
     clearCanvas()
     const file = event.target.files.item(0)
     const bin = await file.text('utf8')
@@ -534,7 +641,7 @@ function setLayer(newLayer) {
    draw()
 }
 
-function draw() {
+function draw() { //MARK: Draw
    var ctx = canvas.getContext("2d")
    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
