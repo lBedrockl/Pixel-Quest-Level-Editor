@@ -1,4 +1,8 @@
 # README
+
+### Editor is hosted [here](https://lbedrockl.github.io/Pixel-Quest-Level-Editor/)
+
+
 #### Python is required for the webserver, otherwise the html cant access the tilesheets
 
 #### Run.bat will start the editor
