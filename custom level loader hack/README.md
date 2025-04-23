@@ -12,19 +12,19 @@ This tutorial is using v.20.0.0 for the decompiler, but the most recent version 
 
 ![open swf](resources/guide/01%20open%20swf.png)
 
-4 - On the left side, expand the `binaryData` and you will see several files ending with `LevelLoader` and a number. Those are the levels. If you can't see them, you can use the horizontal scroll or drag the lateral dots to expand.
+4 - On the left side, expand the `binaryData` and you will see several files named `Level_` and a number. Those are the levels. If you can't see them, you can use the horizontal scroll or drag the lateral dots to expand.
 
 ![open binary data](resources/guide/02%20open%20binary%20data.png)
 
-Obs.: All the `LevelLoader`s are empty except the first one, which is a sample level. It may seem daunting at first when you click the `LevelLoader_01`, but if you focus on the right side you can actually read the name of the level.
+Obs.: Almost all the `Level`s are empty except some sample levels. It may seem daunting at first when you click the `Level_01`, but if you focus on the right side you can actually read the name of the level.
 
 ![content showcase](resources/guide/03%20content%20showcase.png)
 
-5 - To add a new level, right click on the `LevelLoader_02` and click "Replace". Choose the `.bin` that you downloaded or created using the level editor.
+5 - To add a new level, right click on the `Level_02` and click "Replace". Choose the `.bin` that you downloaded or created using the level editor.
 
 ![replace](resources/guide/04%20replace%2002.png)
 
-6 - The `LevelLoader` that you replaced will be in bold, denoting that it has unsaved changes. Click the "Save" button.
+6 - The `Level` that you replaced will be in bold, denoting that it has unsaved changes. Click the "Save" button.
 
 ![save](resources/guide/05%20save.png)
 
@@ -47,6 +47,10 @@ If you added a second level, and then remove the first one, in-game you will see
 
 ![new level go first](resources/guide/08%20new%20level%20go%20first.png)
 
-The level number showing in-game is `01` even though you are using the `Level_Loader_02`. That's because the hack skips all empty levels. They don't need to start at `Level_Loader_01` and they don't need to stay consecutive. If you replace `Level_Loader_09` with a new level, in-game the numbers will adjust automatically.
+The level number showing in-game is `01` even though you are using the `Level_02`. That's because the hack skips all empty levels. They don't need to start at `Level_01` and they don't need to stay consecutive. If you replace `Level_09` with a new level, in-game the numbers will adjust automatically.
 
 ![level skip](resources/guide/09%20level%20skip.png)
+
+## Sample levels
+
+For your convenience, the sample levels are already extracted [here](resources/sample_levels).
