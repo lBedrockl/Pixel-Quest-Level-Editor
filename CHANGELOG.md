@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Paste now doesn't show or work while box place active
 - Holding shift and ctrl does show red now
+- Objects and volumes now load correctly when switching tilesets
 
 ## [1.4.9]
 ### Added

@@ -774,9 +774,14 @@ tilesetImage.onload = function(){
         setLayer(1)
         changeColors()
         loaded = true
-    }else{
-        draw()
     }
+    draw()
+}
+objectImage.onload = function(){
+    draw()
+}
+volumeImage.onload = function(){
+    draw()
 }
 volumeImage.src = `tilesets/${tilesetNames[0].folder}/volume.png`
 objectImage.src = `tilesets/${tilesetNames[0].folder}/object.png`
@@ -847,6 +852,7 @@ function switchTileset(picked){
 
     changeColors()
     changeBG(useIngameBG)
+    draw()
 }
 
 function createHtmlElements(){

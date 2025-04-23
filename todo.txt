@@ -4,10 +4,11 @@
 FINISH Cyber Tileset
 
 
-
-finish copy paste, needs volume, objects, and an all layer copy paste
-
 import to clipboard once copy all works
+
+canvas scrolling and no limit
+for scroll just add an offset to viewed tiles
+ctrl + scroll for scrolling
 
 
 
