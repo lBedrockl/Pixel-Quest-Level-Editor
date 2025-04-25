@@ -22,6 +22,7 @@
             tile: true,
             object: true,
             volume: true,
+            background: true,
             bgColor: '#B3B6CA'
         }
         /*,{

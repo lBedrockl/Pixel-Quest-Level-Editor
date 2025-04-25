@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.5.0] unreleased
+## [1.5.0]
 ### Added
 - You can now use the Editor from [here](https://lbedrockl.github.io/Pixel-Quest-Level-Editor/)
 - Copy pasting now includes, volumes, objects and all layer
 - Added drown volume used for the drown animation in Lost Gifts, but will also work for custom death animation on any tileset
+- More of Cyber tileset and Cyber BG
 
 ### Changed
 - Box place now uses right click to not conflict with copy paste
