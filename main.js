@@ -22,7 +22,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.5.0';
+var editorVer = '1.5.1';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 
@@ -747,15 +747,13 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
     }
 }
 
-function setCanvasSize(width, height, clear){ //in room size
+function setCanvasSize(width, height){ //in room size
     let w = parseInt(width)
     let h = parseInt(height)
     canvas.width = 16 * w
     canvas.height = 16 * h
     document.getElementById('canvasBG').style.width = 16 * w + 'px'
     document.getElementById('canvasBG').style.height = 16 * h + 'px'
-
-    if(currentSize[0] > w || currentSize[1] > h) if(clear) clearCanvas()
 
     currentSize = [w, h]
     draw()

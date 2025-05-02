@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.1] unreleased
+### Fixed
+- Making room size smaller no longer resets everything
+- Correct bg color for above cyber bg
+
 ## [1.5.0]
 ### Added
 - You can now use the Editor from [here](https://lbedrockl.github.io/Pixel-Quest-Level-Editor/)

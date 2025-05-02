@@ -23,7 +23,7 @@
             object: true,
             volume: true,
             background: true,
-            bgColor: '#B3B6CA'
+            bgColor: '#052034'
         }
         /*,{
             folder: "new folder",

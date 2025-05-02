@@ -25,15 +25,13 @@
             <ul>
                 <input type="submit" class="primary-button" value='Clear Canvas' onclick="clearCanvas();setCanvasSize(40,30);
                 document.getElementById('roomX').value = '40';document.getElementById('roomY').value = '30';">
-                <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value,true);return false;">
+                <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value);return false;">
                 <input type="submit" class="primary-button" value='Set Room Size'>
                     <ul class="layers">
                         <input class="input" type="number" min=40 max=160 required=true placeholder="X" id="roomX" name="roomX"></input>
                         <input class="input" type="number"  min=30 max=180 required=true placeholder="Y" id="roomY" name="roomY"></input>
                         <div class="hover-text">!
-                        <span class="tooltip-text" id="fade">This is by tile amount 40x30 is the default size
-                             IF YOU SHRINK THE ROOM SIZE THE CANVAS WILL CLEAR!!
-                        </span>
+                        <span class="tooltip-text" id="fade">This is by tile amount 40x30 is the default size.</span>
                         </div>
                     </ul>
                 </form>
@@ -136,5 +134,5 @@
    </div>
 </div>
 <script type='text/javascript' src="./tilesets/tilesets.js?v=1.4"></script> <!-- Update version number only when modifying tileset.js -->
-<script src="./main.js?v=1.5"></script>
+<script src="./main.js?v=1.5.1"></script>
 </html>
