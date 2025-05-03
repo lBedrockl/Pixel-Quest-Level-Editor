@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [?.?.?] unreleased
+### Added
+- Buttons to incrementally expand canvas size vertically
+
 ### Changed
 - Changing height of room size adds and removes rows ABOVE the map instead of below
 

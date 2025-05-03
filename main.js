@@ -745,16 +745,21 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
     }
 }
 
-function setCanvasSize(width, height){ //in tiles
+function setCanvasSize(width, height, expandToBottomLeft){ //in tiles
     let w = parseInt(width)
     let h = parseInt(height)
+
+    if (w < 40 || h < 30) {
+        return;
+    }
+
     let oldH = canvas.height / 16;
     canvas.width = 16 * w
     canvas.height = 16 * h
     document.getElementById('canvasBG').style.width = 16 * w + 'px'
     document.getElementById('canvasBG').style.height = 16 * h + 'px'
 
-    if (oldH > 0) {
+    if (oldH > 0 && !expandToBottomLeft) {
         updateRowCount(h - oldH);
     }
 

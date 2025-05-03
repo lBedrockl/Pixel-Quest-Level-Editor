@@ -83,12 +83,26 @@
          </div>
       </aside>
       <div class="card_right-column">
+        <div class="buttons">
+            <input type="submit" class="primary-button" value='+15' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) + 15);">
+            <input type="submit" class="primary-button" value='+' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) + 1);">
+            <input type="submit" class="primary-button" value='-' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) - 1);">
+            <input type="submit" class="primary-button" value='- 15' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) - 15);">
+        </div>
+
          <!-- The main canvas -->
          <div id="canvasBG" crossorigin></div>
          <canvas id="canvas" width="0" height="0"></canvas>
          
          
          <div class="canvas-container_selection"></div>
+
+         <div class="buttons">
+            <input type="submit" class="primary-button" value='+15' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) + 15, true);">
+            <input type="submit" class="primary-button" value='+' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) + 1, true);">
+            <input type="submit" class="primary-button" value='-' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) - 1, true);">
+            <input type="submit" class="primary-button" value='- 15' onclick="setCanvasSize(document.getElementById('roomX').value,parseInt(document.getElementById('roomY').value) - 15, true);">
+        </div>
          
          <div class="instructions-dd">
             <details class="inst-button">
@@ -113,6 +127,7 @@
                 </div>
             </details>
          </div>
+         
          <!-- UI for layers -->
          <div>
             <p class="instructions" id="checkboxes">
