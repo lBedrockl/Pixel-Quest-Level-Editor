@@ -22,11 +22,9 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.5.1';
+var editorVer = '1.5.0-SNAPSHOT';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
-
-var currentSize = [2, 2];
 
 var selection = [0, 0];
 var selectionObj = [0, 0];
@@ -609,7 +607,7 @@ async function importBin(event){ //MARK: Import
     }
 
     setLayer(6)
-    setCanvasSize(col[1].length - 1, rows.length - 1, false)
+    setCanvasSize(col[1].length - 1, rows.length - 1)
     draw()
 
 }
@@ -622,7 +620,7 @@ function extractFirstText(str){
 //Reset state to empty
 function clearCanvas() {
    layers = [{}, {}, {}, {}, {}, {}];
-   draw();
+   setCanvasSize(40,30);
    document.getElementById("lvlName").value = ""
    document.getElementById("authName").value = ""
    switchTileset(0)
@@ -747,15 +745,19 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
     }
 }
 
-function setCanvasSize(width, height){ //in room size
+function setCanvasSize(width, height){ //in tiles
     let w = parseInt(width)
     let h = parseInt(height)
+    let oldH = canvas.height / 16;
     canvas.width = 16 * w
     canvas.height = 16 * h
     document.getElementById('canvasBG').style.width = 16 * w + 'px'
     document.getElementById('canvasBG').style.height = 16 * h + 'px'
 
-    currentSize = [w, h]
+    if (oldH > 0) {
+        updateRowCount(h - oldH);
+    }
+
     draw()
     document.getElementById('roomX').value = w;
     document.getElementById('roomY').value = h;
@@ -763,12 +765,55 @@ function setCanvasSize(width, height){ //in room size
     document.getElementById("html").style.width = `${Math.max(w*0.95,100)}%` // this is dumb but it works lol
 }
 
+function updateRowCount(rowDifference) {
+    if (rowDifference > 0) {
+        addRowsAbove(rowDifference);
+    } else if (rowDifference < 0) {
+        removeRowsAbove(Math.abs(rowDifference));
+    }
+}
+
+function addRowsAbove(rowsToAdd) {
+    let updatedLayers = [{}, {}, {}, {}, {}, {}];
+
+    for(let i = 0; i < layers.length; i++){
+        let layer = layers[i];
+        Object.keys(layer).forEach((key) => {
+            // Determine x/y position of this placement from key ("3-4" -> x=3, y=4)
+            let px = Number(key.split("-")[0])
+            let py = Number(key.split("-")[1])
+            updatedLayers[i][px + "-" + (py + rowsToAdd)] = layer[key]
+        })
+    }
+
+    layers = updatedLayers;
+}
+
+function removeRowsAbove(rowsToRemove) {
+    let updatedLayers = [{}, {}, {}, {}, {}, {}];
+
+    for(let i = 0; i < layers.length; i++){
+        let layer = layers[i];
+        Object.keys(layer).forEach((key) => {
+            // Determine x/y position of this placement from key ("3-4" -> x=3, y=4)
+            let px = Number(key.split("-")[0])
+            let py = Number(key.split("-")[1])
+            let newPy = py - rowsToRemove
+            if (newPy >= 0) {
+                updatedLayers[i][px + "-" + newPy] = layer[key]
+            }
+        })
+    }
+
+    layers = updatedLayers;
+}
+
 //Initialize app when tileset source is done loading
 var loaded = false
 tilesetImage.onload = function(){
     if(!loaded){
         createHtmlElements()
-        setCanvasSize(40,30,true)
+        setCanvasSize(40,30)
         setLayer(1)
         changeColors()
         loaded = true

@@ -21,37 +21,37 @@
         <ul class="layers">By Bedrock</ul>
         </h1>
     </a>
-        <div class="buttons">
-            <ul>
-                <input type="submit" class="primary-button" value='Clear Canvas' onclick="clearCanvas();setCanvasSize(40,30);
-                document.getElementById('roomX').value = '40';document.getElementById('roomY').value = '30';">
-                <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value);return false;">
-                <input type="submit" class="primary-button" value='Set Room Size'>
-                    <ul class="layers">
-                        <input class="input" type="number" min=40 max=160 required=true placeholder="X" id="roomX" name="roomX"></input>
-                        <input class="input" type="number"  min=30 max=180 required=true placeholder="Y" id="roomY" name="roomY"></input>
-                        <div class="hover-text">!
-                        <span class="tooltip-text" id="fade">This is by tile amount 40x30 is the default size.</span>
-                        </div>
-                    </ul>
-                </form>
-            </ul>
-        </div>
-        <form id=lvlnameForm onsubmit="
-        if(event.submitter.value == 'Download Level'){
-            download(this['lvlName'].value)
-        }else{
-            importBin(this['level'].value)
-        }
-        return false;">
-            <input type="submit" class="primary-button" value='Download Level'>
-            <input type="file" id="level" name="level" accept=".bin" onChange="importBin(event);form.reset();"/>
-            <ul class="layers">
-            <label>Level Name: </label>
-            <textarea rows=1 cols=44 maxlength=53 required placeholder="Level Name" id='lvlName' name="lvlName"></textarea><br>
-            <textarea rows=1 cols=44 maxlength=20 placeholder="Author Name" id='authName' name="authName"></textarea>
-            </ul>
-        </form>
+    <div class="buttons">
+        <ul>
+            <input type="submit" class="primary-button" value='Clear Canvas' onclick="clearCanvas();">
+            <form id="reloadForm" onsubmit="setCanvasSize(this['roomX'].value,this['roomY'].value);return false;">
+            <input type="submit" class="primary-button" value='Set Room Size'>
+                <ul class="layers">
+                    <input class="input" type="number" min=40 max=160 required=true placeholder="X" id="roomX" name="roomX"></input>
+                    <input class="input" type="number"  min=30 max=180 required=true placeholder="Y" id="roomY" name="roomY"></input>
+                    <div class="hover-text">!
+                    <span class="tooltip-text" id="fade">This is by tile amount. 40x30 is the default size.</span>
+                    </div>
+                </ul>
+            </form>
+        </ul>
+    </div>
+
+    <form id=lvlnameForm onsubmit="
+    if(event.submitter.value == 'Download Level'){
+        download(this['lvlName'].value)
+    }else{
+        importBin(this['level'].value)
+    }
+    return false;">
+        <input type="submit" class="primary-button" value='Download Level'>
+        <input type="file" id="level" name="level" accept=".bin" onChange="importBin(event);form.reset();"/>
+        <ul class="layers">
+        <label>Level Name: </label>
+        <textarea rows=1 cols=44 maxlength=53 required placeholder="Level Name" id='lvlName' name="lvlName"></textarea><br>
+        <textarea rows=1 cols=44 maxlength=20 placeholder="Author Name" id='authName' name="authName"></textarea>
+        </ul>
+    </form>
    </header>
    <div class="card_body">
       <aside>
