@@ -752,7 +752,8 @@ function setCanvasSize(width, height, expandToBottomLeft){ //in tiles
     if (w < 40 || h < 30) {
         return;
     }
-
+    
+    let oldW = canvas.width / 16;
     let oldH = canvas.height / 16;
     canvas.width = 16 * w
     canvas.height = 16 * h
@@ -761,6 +762,9 @@ function setCanvasSize(width, height, expandToBottomLeft){ //in tiles
 
     if (oldH > 0 && !expandToBottomLeft) {
         updateRowCount(h - oldH);
+    }
+    if (oldW > 0 && expandToBottomLeft) {
+        updateColumnCount(w - oldW);
     }
 
     draw()
@@ -775,6 +779,14 @@ function updateRowCount(rowDifference) {
         addRowsAbove(rowDifference);
     } else if (rowDifference < 0) {
         removeRowsAbove(Math.abs(rowDifference));
+    }
+}
+
+function updateColumnCount(columnDifference) {
+    if (columnDifference > 0) {
+        addColumnsOnTheLeft(columnDifference);
+    } else if (columnDifference < 0) {
+        removeColumnsOnTheLeft(Math.abs(columnDifference));
     }
 }
 
@@ -806,6 +818,41 @@ function removeRowsAbove(rowsToRemove) {
             let newPy = py - rowsToRemove
             if (newPy >= 0) {
                 updatedLayers[i][px + "-" + newPy] = layer[key]
+            }
+        })
+    }
+
+    layers = updatedLayers;
+}
+
+function addColumnsOnTheLeft(columnsToAdd) {
+    let updatedLayers = [{}, {}, {}, {}, {}, {}];
+
+    for(let i = 0; i < layers.length; i++){
+        let layer = layers[i];
+        Object.keys(layer).forEach((key) => {
+            // Determine x/y position of this placement from key ("3-4" -> x=3, y=4)
+            let px = Number(key.split("-")[0])
+            let py = Number(key.split("-")[1])
+            updatedLayers[i][(px + columnsToAdd) + "-" + py] = layer[key]
+        })
+    }
+
+    layers = updatedLayers;
+}
+
+function removeColumnsOnTheLeft(columnsToRemove) {
+    let updatedLayers = [{}, {}, {}, {}, {}, {}];
+
+    for(let i = 0; i < layers.length; i++){
+        let layer = layers[i];
+        Object.keys(layer).forEach((key) => {
+            // Determine x/y position of this placement from key ("3-4" -> x=3, y=4)
+            let px = Number(key.split("-")[0])
+            let py = Number(key.split("-")[1])
+            let newPx = px - columnsToRemove
+            if (newPx >= 0) {
+                updatedLayers[i][newPx + "-" + py] = layer[key]
             }
         })
     }
