@@ -647,9 +647,10 @@ function trimMap() {
 
     removeColumnsOnTheLeft(minAnythingX)
     removeRowsAbove(minAnythingY)
-
-    // this is needed so the columns are corectly added when setCanvasSize
-    canvas.height = (maxAnythingY - minAnythingY + 1) * 16;
+    rowsToAdd = 30 - (maxAnythingY - minAnythingY + 1)
+    if (rowsToAdd > 0) {
+        addRowsAbove(rowsToAdd)
+    }
 
     setCanvasSize(Math.max(40, maxAnythingX - minAnythingX + 1), Math.max(30, maxAnythingY - minAnythingY + 1))
 }
@@ -773,7 +774,7 @@ function calcOffset(value){ //when object is draw to screen calc offset so cente
     }
 }
 
-function setCanvasSize(width, height, expandToBottomLeft){ //in tiles
+function setCanvasSize(width, height, expandToTopLeft){ //in tiles
     let w = parseInt(width)
     let h = parseInt(height)
 
@@ -788,10 +789,10 @@ function setCanvasSize(width, height, expandToBottomLeft){ //in tiles
     document.getElementById('canvasBG').style.width = 16 * w + 'px'
     document.getElementById('canvasBG').style.height = 16 * h + 'px'
 
-    if (oldH > 0 && !expandToBottomLeft) {
+    if (oldH > 0 && expandToTopLeft) {
         updateRowCount(h - oldH);
     }
-    if (oldW > 0 && expandToBottomLeft) {
+    if (oldW > 0 && expandToTopLeft) {
         updateColumnCount(w - oldW);
     }
 
