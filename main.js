@@ -626,6 +626,34 @@ function clearCanvas() {
    switchTileset(0)
 }
 
+function trimMap() {
+    let minAnythingX = canvas.width / 16;
+    let minAnythingY = canvas.height / 16;
+    let maxAnythingX = 0
+    let maxAnythingY = 0
+
+    for(let i = 0; i < layers.length; i++){
+        let layer = layers[i];
+        Object.keys(layer).forEach((key) => {
+            // Determine x/y position of this placement from key ("3-4" -> x=3, y=4)
+            let px = Number(key.split("-")[0])
+            let py = Number(key.split("-")[1])
+            minAnythingX = Math.min(minAnythingX, px)
+            minAnythingY = Math.min(minAnythingY, py)
+            maxAnythingX = Math.max(maxAnythingX, px)
+            maxAnythingY = Math.max(maxAnythingY, py)
+        })
+    }
+
+    removeColumnsOnTheLeft(minAnythingX)
+    removeRowsAbove(minAnythingY)
+
+    // this is needed so the columns are corectly added when setCanvasSize
+    canvas.height = (maxAnythingY - minAnythingY + 1) * 16;
+
+    setCanvasSize(Math.max(40, maxAnythingX - minAnythingX + 1), Math.max(30, maxAnythingY - minAnythingY + 1))
+}
+
 function setLayer(newLayer) {
    //Update the layer
    currentLayer = newLayer;
