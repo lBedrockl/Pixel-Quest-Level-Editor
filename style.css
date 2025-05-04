@@ -259,8 +259,12 @@ canvas {
 .column {
   float: left;
   display: table-cell;
-  /* vertical-align doesn't work :( */
-  vertical-align: middle;
+}
+
+.three-column-layout {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 55px 1fr 55px;
 }
 
 label {
