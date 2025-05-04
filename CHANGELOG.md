@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [?.?.?] unreleased
 ### Added
-- Buttons to incrementally expand canvas size vertically
+- Buttons to incrementally expand canvas size
 
 ### Changed
 - Changing height of room size adds and removes rows ABOVE the map instead of below

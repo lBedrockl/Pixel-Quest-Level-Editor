@@ -200,7 +200,12 @@ canvas {
 .layers button:hover {font-weight: bold;color: cyan}
 
 .buttons {
+  padding-right: 10px;
+}
+
+.buttons-center {
     padding-right: 10px;
+    text-align: center;
 }
 
 .primary-button {
@@ -217,6 +222,45 @@ canvas {
 
 .primary-button:hover {
     background-color: darkcyan;
+}
+
+.smaller-button {
+  border: 0;
+  background: rgb(27, 190, 185);
+  border-top: 1px solid transparent;
+  border-bottom: 4px solid darkcyan;
+  color: #fff;
+  border-radius: 6px;
+  outline: 0;
+  padding: 1px 8px;
+  cursor: pointer;
+  margin:3px 0 6px 0;
+}
+
+.smaller-vertical-button {
+  border: 0;
+  background: rgb(27, 190, 185);
+  border-top: 1px solid transparent;
+  border-bottom: 4px solid darkcyan;
+  color: #fff;
+  border-radius: 6px;
+  outline: 0;
+  padding: 1px 8px;
+  cursor: pointer;
+  margin:3px 6px 0px 6px;
+  display: block;
+  min-width: 43px;
+}
+
+.row {
+  display:table-row;
+}
+
+.column {
+  float: left;
+  display: table-cell;
+  /* vertical-align doesn't work :( */
+  vertical-align: middle;
 }
 
 label {
