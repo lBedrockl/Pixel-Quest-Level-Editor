@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Buttons to incrementally expand canvas size
 - Trim Map button
 
+### Changed
+- Selections now stay on screen when scrolling
+
 ### Fixed
 - Making room size smaller no longer resets everything
 - Correct bg color for above cyber bg

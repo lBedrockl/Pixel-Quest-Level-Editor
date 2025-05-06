@@ -49,6 +49,11 @@ body {
 .card aside {
   padding-left: 16px;
   padding-right: 16px;
+  width: 116px;
+}
+
+.posfixed{
+    position: fixed;
 }
 
 .card_body {
