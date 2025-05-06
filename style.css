@@ -9,10 +9,10 @@ html {
 
 body {
   font-family: "Source Sans Pro", sans-serif;
-  padding: 1em;
+  padding-bottom: 3em;
   background: black;
-  display: flex;
-  justify-content: space-around;
+  /* display: flex;
+  justify-content: center; */
   color: cyan;
 }
 
@@ -27,15 +27,16 @@ body {
 .card {
   background: #000000;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-  padding-bottom: 16px;
+  margin: auto;
 }
+
 .card header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #878787;
-  margin-bottom: 1em;
   padding: 16px;
+  padding-right: 0px;
+  width: 1200px;
+  margin: auto;
 }
 
 .card header h1:hover {color: darkcyan}
@@ -53,11 +54,19 @@ body {
 }
 
 .posfixed{
-    position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+  margin-bottom: -9999px; /*lmao that worked*/
 }
+
 
 .card_body {
   display: flex;
+  justify-content: center;
+  padding-top: 32px;
+  border-top: 1px solid #878787;
+  margin: auto;
 }
 
 .card_right-column {

@@ -10,11 +10,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Trim Map button
 
 ### Changed
-- Selections now stay on screen when scrolling
+- The entire UI has been reworked and is much better
 
 ### Fixed
 - Making room size smaller no longer resets everything
 - Correct bg color for above cyber bg
+- The Controls dropdown text now changes color
+
+### Reverted
+- Clearing the canvas now changes the tileset back to Original
 
 ## [1.5.0]
 ### Added

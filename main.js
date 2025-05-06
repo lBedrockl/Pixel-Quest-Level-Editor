@@ -623,7 +623,7 @@ function clearCanvas() {
    setCanvasSize(40,30);
    document.getElementById("lvlName").value = ""
    document.getElementById("authName").value = ""
-   switchTileset(0)
+   //switchTileset(0)
 }
 
 function trimMap() {
@@ -994,10 +994,13 @@ function changeColors(){ //if I add new css do it at bottom, it will break this 
     var darkerColor = [Math.floor(mainColor[0]/2),Math.floor(mainColor[1]/2),Math.floor(mainColor[2]/2),mainColor[3]]
 
     document.querySelector('body').style.color = rgbaToText(mainColor)
+    document.querySelector('.inst-button').style.color = rgbaToText(mainColor)
     document.querySelector('#canvas').style.outlineColor = rgbaToText(mainColor)
     document.querySelector('.image1').style.backgroundColor = rgbaToText(midColor)
     document.querySelector('.tooltip-text').style.backgroundColor = rgbaToText(darkerColor)
     document.querySelector('.hover-text').style.background = rgbaToText(darkerColor)
+    
+    
 
     let title = document.querySelector('.card').querySelector('header').querySelector('h1')
     title.style.color = rgbaToText(mainColor)
@@ -1055,6 +1058,8 @@ function changeColors(){ //if I add new css do it at bottom, it will break this 
             }
         })
     })
+
+    //change button colors
     
     document.querySelector('.dropdown-content').querySelectorAll('button').forEach((elem) => {
         elem.style.color = rgbaToText(mainColor)
@@ -1064,6 +1069,22 @@ function changeColors(){ //if I add new css do it at bottom, it will break this 
     })
     
     document.querySelectorAll('.primary-button').forEach((elem) => {
+        elem.style.backgroundColor = rgbaToText(midColor)
+        elem.style.borderBottomColor = rgbaToText(darkerColor)
+
+        elem.onmouseover = function() {this.style.backgroundColor = rgbaToText(darkerColor)}
+        elem.onmouseleave = function() {this.style.backgroundColor = rgbaToText(midColor)}
+    })
+
+    document.querySelectorAll('.smaller-vertical-button').forEach((elem) => {
+        elem.style.backgroundColor = rgbaToText(midColor)
+        elem.style.borderBottomColor = rgbaToText(darkerColor)
+
+        elem.onmouseover = function() {this.style.backgroundColor = rgbaToText(darkerColor)}
+        elem.onmouseleave = function() {this.style.backgroundColor = rgbaToText(midColor)}
+    })
+
+    document.querySelectorAll('.smaller-button').forEach((elem) => {
         elem.style.backgroundColor = rgbaToText(midColor)
         elem.style.borderBottomColor = rgbaToText(darkerColor)
 
