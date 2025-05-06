@@ -22,7 +22,7 @@ var objectSelection2 = document.querySelector(".object-container_selection2");
 var objectImage = document.querySelector("#object-source");
 
 
-var editorVer = '1.5.0-SNAPSHOT';
+var editorVer = '1.6.0';
 document.getElementById("editorVersion").innerHTML = "v" + editorVer;
 document.getElementById("title").innerHTML = "Pixel Quest Map Editor v" + editorVer;
 

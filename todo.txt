@@ -3,28 +3,8 @@
 
 FINISH Cyber Tileset
 
-
 import to clipboard once copy all works
-
-canvas scrolling and no limit
-for scroll just add an offset to viewed tiles
-ctrl + scroll for scrolling
-
-
-
-
-- when holding alt you can drag around the canvas
 
 try adding a 0.1 opac fill to canvas box place, uses custom color
 
 sometimes checkbox can be checked but volumes dont show????????????? *very rare*
-
-
-
-fix when clicking on object container colors dont update
-
-
-
-IDK
-
-x box place removing always shows small box at box place start, weird
